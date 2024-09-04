@@ -7,7 +7,8 @@ import 'package:parbank/helpers/USize.dart';
 class ULabel extends StatelessWidget {
   Widget? child;
   String? label;
-  ULabel({super.key, this.label, this.child});
+  double? labelPadding;
+  ULabel({super.key, this.label, this.child, this.labelPadding});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +19,9 @@ class ULabel extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              left: USize.Width * 0.01, bottom: USize.Width * 0.01),
+              left: labelPadding ?? USize.Width * 0.01, bottom: USize.Width * 0.01),
           child: UText(
-            "${label!}:",
+            label!,
             fontSize: 16,
             fontWeight: FontWeight.w600,
           ),

@@ -44,11 +44,18 @@ class Localizer
   static const List<String> select_a_district = ["İlçe seç...", "Select a district..."];
   static const List<String> select_a_gender = ["Cinsiyet seç...", "Select a gender..."];
   static const List<String> email_is_invalid = ["Email adresi geçerli değil.", "Email address is invalid."];
+  static const List<String> home = ["Ana Sayfa", "Home"];
+  static const List<String> all_transactions = ["Tüm İşlemler", "All Transactions"];
   static const List<String> phoneno_is_invalid = ["Telefon no geçerli değil.", "Phone no is invalid."];
   
   static const List<String> approve = ["Onay", "Approve"];
   static const List<String> nevermind = ["Vazgeç", "Nevermind"];
+  static const List<String> my_accounts = ["Hesaplarım", "My Accounts"];
+  static const List<String> my_cards = ["Kartlarım", "My Cards"];
   static const List<String> log_out = ["Çıkış yap", "Log out"];
+  static const List<String> currency_type = ["Döviz Cinsi", "Currency Type"];
+  static const List<String> balance = ["Bakiye", "Balance"];
+  static const List<String> available_limit = ["Kullanılabilir Limit", "Available Limit"];
   static const List<String> customer_will_logged_out_to_change = ["Müşteri değiştirmek için güncel müşteriden çıkış yapılacaktır. Onaylıyor musun?", "To change a customer, the current customer will be logged out. Do you approve?"];
   static const List<String> customer_will_logged_out_to_create_new = ["Yeni müşteri oluşturmak için güncel müşteriden çıkış yapılacaktır. Onaylıyor musun?", "To create a new customer, the current customer will be logged out. Do you approve?"];
   static const List<String> this_field_cannot_be_left_empty = ["Bu alan boş bırakılamaz.", "This field cannot be left empty."];

@@ -7,14 +7,25 @@ import 'package:parbank/helpers/UAsset.dart';
 import 'package:parbank/helpers/UColor.dart';
 import 'package:parbank/helpers/USize.dart';
 
-class UScaffold extends StatelessWidget {
+class UScaffold extends StatefulWidget {
   Widget? body;
   List<Widget>? actions;
   Widget? title;
   FloatingActionButton? floatingActionButton;
 
-  UScaffold({super.key, this.body, this.actions, this.floatingActionButton, this.title});
+  UScaffold(
+      {super.key,
+      this.body,
+      this.actions,
+      this.floatingActionButton,
+      this.title});
 
+  @override
+  State<UScaffold> createState() => _UScaffoldState();
+}
+
+class _UScaffoldState extends State<UScaffold> {
+  int currentPageIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +35,7 @@ class UScaffold extends StatelessWidget {
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))),
         leadingWidth: USize.Width / 4.5,
         toolbarHeight: USize.Height / 13,
-        title: title,
+        title: widget.title,
         leading: Padding(
           padding: EdgeInsets.only(left: USize.Width / 44),
           child: GestureDetector(
@@ -38,15 +49,15 @@ class UScaffold extends StatelessWidget {
                 width: USize.Width, height: USize.Height),
           ),
         ),
-        actions: actions,
+        actions: widget.actions,
         backgroundColor: UColor.PrimaryColor,
       ),
       body: GestureDetector(
           onTap: () {
             FocusManager.instance.primaryFocus?.unfocus();
           },
-          child: SingleChildScrollView(child: body)),
-      floatingActionButton: floatingActionButton,
+          child: SingleChildScrollView(child: widget.body)),
+      floatingActionButton: widget.floatingActionButton,
     );
   }
 }

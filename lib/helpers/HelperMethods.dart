@@ -8,6 +8,7 @@ import 'package:parbank/components/UText.dart';
 import 'package:parbank/helpers/Localizer.dart';
 import 'package:parbank/helpers/UAsset.dart';
 import 'package:parbank/helpers/UColor.dart';
+import 'package:intl/intl.dart';
 import 'package:parbank/helpers/USize.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,12 +25,22 @@ class HelperMethods {
   static SetLoadingScreen(BuildContext context) {
     showDialog<void>(
       barrierColor: UColor.BarrierColor,
-      barrierDismissible: false,
+      barrierDismissible: true,
       context: context,
       builder: (BuildContext context) {
         return const UCircularProgressIndicator();
       },
     );
+  }
+
+  static String accountNoToIBAN(
+      int branchNo, String accountNo, bool withSpace) {
+    String iban = "TR11${branchNo.toString().padLeft(6, '0')}$accountNo";
+
+    if (withSpace) {
+      return "${iban.substring(0, 4)} ${iban.substring(4, 8)} ${iban.substring(8, 12)} ${iban.substring(12, 16)} ${iban.substring(16, 20)} ${iban.substring(20, 24)} ${iban.substring(24)}";
+    }
+    return iban;
   }
 
   static InsertData(String fullName, String identityNo) async {
@@ -38,10 +49,15 @@ class HelperMethods {
     sp.setString("IdentityNo", identityNo);
     sp.setString("FullName", fullName);
   }
-  
+
+  static String FormatBalance(double balance) {
+    NumberFormat formatter = NumberFormat('#,##0.00', 'en_US');
+    return formatter.format(balance);
+  }
+
   static DeleteData() async {
     var sp = await SharedPreferences.getInstance();
-    
+
     await sp.remove("IdentityNo");
     await sp.remove("FullName");
   }
@@ -69,7 +85,8 @@ class HelperMethods {
     ));
   }
 
-  static SetBottomSheet(BuildContext context, String bodyText, String asset, String labelText, Widget button) {
+  static SetBottomSheet(BuildContext context, String bodyText, String asset,
+      String labelText, Widget button) {
     showModalBottomSheet(
       context: context,
       barrierColor: UColor.BarrierColor,
@@ -101,7 +118,13 @@ class HelperMethods {
                   width: USize.Height / 8,
                 ),
                 Gap(USize.Height / 44),
-                Container(width: USize.Width * 0.75, alignment: Alignment.center, child: Text(bodyText, textAlign: TextAlign.center,)),
+                Container(
+                    width: USize.Width * 0.75,
+                    alignment: Alignment.center,
+                    child: Text(
+                      bodyText,
+                      textAlign: TextAlign.center,
+                    )),
                 Gap(USize.Height / 17),
                 button
               ],

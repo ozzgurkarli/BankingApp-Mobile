@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
+import 'package:parbank/S-BTMGNRTR/BTMGNRTR.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
@@ -200,7 +200,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
             Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => HOMESCRN(
+                    builder: (context) => BTMGNRTR(
                           customer: customer,
                         )),
                 (route) => false);

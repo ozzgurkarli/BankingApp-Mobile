@@ -13,4 +13,6 @@ class UColor
   static const Color RedLightColor = Color(0xFFFf4744);
   static const Color RedColor = Color(0xFFFE1D1D);
   static const Color RedHeavyColor = Color(0xFFB11B1B);
+
+  static const List<Color> GoldPlusGradient = [ Color(0xFFF0C800), Color(0xFFB18F24),];
 }

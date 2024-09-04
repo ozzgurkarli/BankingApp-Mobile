@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
+import 'package:parbank/S-BTMGNRTR/BTMGNRTR.dart';
 import 'package:parbank/S-NEWPSWRD/NEWPSWRD.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
@@ -153,7 +153,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    HOMESCRN(customer: customer)),
+                                    BTMGNRTR(customer: customer)),
                             (route) => false);
                       }
                     } else if (controller.text.length != 6) {

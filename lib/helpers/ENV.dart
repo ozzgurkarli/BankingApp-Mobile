@@ -2,5 +2,5 @@
 
 class ENV
 {
-  static String ConnectionString = "";
+  static String ConnectionString = "http://localhost:37834/api/";
 }
