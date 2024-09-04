@@ -19,7 +19,7 @@ class UDropDownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width ?? USize.Width * 0.6,
+      width: width ?? USize.Width * 0.73,
       child: DropdownButtonFormField(
           decoration: InputDecoration(
             isDense: true,
@@ -47,7 +47,7 @@ class UDropDownButton extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   borderSide: BorderSide.none)),
           borderRadius: BorderRadius.circular(12),
-          dropdownColor: UColor.PrimaryLightColor,
+          dropdownColor: UColor.WhiteHeavyColor,
           items: items,
           value: value,
           onChanged: onChanged),

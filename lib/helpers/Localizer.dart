@@ -41,6 +41,7 @@ class Localizer
   static const List<String> monthly_income = ["Aylık Gelir", "Monthly Income"];
   static const List<String> select_a_profession = ["Meslek seç...", "Select a profession..."];
   static const List<String> select_a_city = ["İl seç...", "Select a city..."];
+  static const List<String> select_a_currency = ["Döviz cinsi seç...", "Select a currency type..."];
   static const List<String> select_a_district = ["İlçe seç...", "Select a district..."];
   static const List<String> select_a_gender = ["Cinsiyet seç...", "Select a gender..."];
   static const List<String> email_is_invalid = ["Email adresi geçerli değil.", "Email address is invalid."];
@@ -52,8 +53,11 @@ class Localizer
   static const List<String> nevermind = ["Vazgeç", "Nevermind"];
   static const List<String> my_accounts = ["Hesaplarım", "My Accounts"];
   static const List<String> my_cards = ["Kartlarım", "My Cards"];
+  static const List<String> settings = ["Ayarlar", "Settings"];
   static const List<String> log_out = ["Çıkış yap", "Log out"];
   static const List<String> currency_type = ["Döviz Cinsi", "Currency Type"];
+  static const List<String> open_an_account = ["Hesap Aç", "Open An Account"];
+  static const List<String> card_application = ["Kart Başvurusu", "Card Application"];
   static const List<String> balance = ["Bakiye", "Balance"];
   static const List<String> available_limit = ["Kullanılabilir Limit", "Available Limit"];
   static const List<String> customer_will_logged_out_to_change = ["Müşteri değiştirmek için güncel müşteriden çıkış yapılacaktır. Onaylıyor musun?", "To change a customer, the current customer will be logged out. Do you approve?"];

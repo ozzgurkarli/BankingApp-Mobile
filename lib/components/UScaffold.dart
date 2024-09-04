@@ -10,6 +10,7 @@ import 'package:parbank/helpers/USize.dart';
 class UScaffold extends StatefulWidget {
   Widget? body;
   List<Widget>? actions;
+  Widget? leading;
   Widget? title;
   FloatingActionButton? floatingActionButton;
 
@@ -17,6 +18,7 @@ class UScaffold extends StatefulWidget {
       {super.key,
       this.body,
       this.actions,
+      this.leading,
       this.floatingActionButton,
       this.title});
 
@@ -33,10 +35,23 @@ class _UScaffoldState extends State<UScaffold> {
       appBar: AppBar(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))),
-        leadingWidth: USize.Width / 4.5,
+        leadingWidth: widget.leading == null ? USize.Width / 4.5 : 56,
         toolbarHeight: USize.Height / 13,
-        title: widget.title,
-        leading: Padding(
+        title: widget.leading == null ? widget.title : SizedBox(
+          width: USize.Width/4.5,
+          height: USize.Height/13,
+          child: GestureDetector(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LGNIDNTY()),
+                    (route) => false);
+              },
+              child: HelperMethods.ShowAsset(UAsset.LOGO_WITH_SIDE_TEXT,
+                  width: USize.Width, height: USize.Height),
+            ),
+        ),
+        leading: widget.leading ?? Padding(
           padding: EdgeInsets.only(left: USize.Width / 44),
           child: GestureDetector(
             onTap: () {
@@ -49,6 +64,7 @@ class _UScaffoldState extends State<UScaffold> {
                 width: USize.Width, height: USize.Height),
           ),
         ),
+        centerTitle: true,
         actions: widget.actions,
         backgroundColor: UColor.PrimaryColor,
       ),

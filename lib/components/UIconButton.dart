@@ -8,10 +8,21 @@ class UIconButton extends StatelessWidget {
   String? tooltip;
   double? iconSize;
 
-  UIconButton({super.key, required this.icon, this.onPressed, this.tooltip, this.iconSize});
+  UIconButton(
+      {super.key,
+      required this.icon,
+      this.onPressed,
+      this.tooltip,
+      this.iconSize});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: onPressed, iconSize: iconSize ?? 50, splashRadius: 0.01, tooltip: tooltip, icon: icon);
+    return IconButton(
+        onPressed: onPressed,
+        style: const ButtonStyle(splashFactory: NoSplash.splashFactory),
+        iconSize: iconSize ?? 50,
+        splashRadius: 0.01,
+        tooltip: tooltip,
+        icon: icon);
   }
 }
