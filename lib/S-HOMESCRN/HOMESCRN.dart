@@ -11,10 +11,12 @@ import 'package:parbank/components/ULabel.dart';
 import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/UText.dart';
 import 'package:parbank/dto/DTOAccount.dart';
+import 'package:parbank/dto/DTOCreditCard.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
+import 'package:parbank/helpers/UAsset.dart';
 import 'package:parbank/helpers/UColor.dart';
 import 'package:parbank/helpers/USize.dart';
 
@@ -92,10 +94,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                             color: UColor.WhiteColor,
                                           ),
                                           UText(
-                                                accList[index].Currency,
-                                                fontWeight: FontWeight.w600,
-                                                color: UColor.WhiteColor,
-                                              ),
+                                            accList[index].Currency,
+                                            fontWeight: FontWeight.w600,
+                                            color: UColor.WhiteColor,
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -127,7 +129,8 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
                                               UText(
-                                                HelperMethods.FormatBalance(accList[index].Balance),
+                                                HelperMethods.FormatBalance(
+                                                    accList[index].Balance),
                                                 fontWeight: FontWeight.w600,
                                                 color: UColor.WhiteColor,
                                               ),
@@ -144,7 +147,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                           ConnectionState.waiting) {
                         return const UCircularProgressIndicator();
                       } else {
-                        return const UCircularProgressIndicator();
+                        return HelperMethods.ApiException(context, "exception");
                       }
                     },
                   )),
@@ -154,95 +157,125 @@ class _HOMESCRNState extends State<HOMESCRN> {
               label: Localizer.Get(Localizer.my_cards),
               labelPadding: 35,
               child: SizedBox(
-                width: USize.Width,
-                height: USize.Height / 4.7,
-                child: PageView.builder(
-                  itemCount: 2,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 30,
-                        ),
-                        decoration: BoxDecoration(
-                            gradient: const LinearGradient(
-                                colors: UColor.GoldPlusGradient),
-                            borderRadius: BorderRadius.circular(12)),
-                        child: Stack(
-                          children: [
-                            Container(
-                                alignment: Alignment.bottomCenter,
-                                padding: const EdgeInsets.all(18),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
+                  width: USize.Width,
+                  height: USize.Height / 4.7,
+                  child: FutureBuilder(
+                    future: UProxy.Get(
+                        IService.GET_CREDIT_CARDS,
+                        MessageContainer.builder({
+                          "DTOCreditCard": DTOCreditCard(
+                              CustomerNo: widget.customer.CustomerNo),
+                        })),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        List cardList = snapshot.data!.GetWithKey("CCList");
+
+                        if (cardList.isNotEmpty && cardList.first is Map) {
+                          for (var i = 0; i < cardList.length; i++) {
+                            cardList[i] = DTOCreditCard.fromJson(cardList[i]);
+                          }
+                        }
+                        return PageView.builder(
+                          itemCount: cardList.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 30,
+                                ),
+                                decoration: BoxDecoration(
+                                    gradient: LinearGradient(colors: UColor.CardGradients[cardList[index].Type], transform: GradientRotation(45)),
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: Stack(
                                   children: [
-                                    UText(
-                                      "1238 7182 1892 1827",
-                                      fontWeight: FontWeight.w700,
-                                      color: UColor.WhiteColor,
-                                      fontSize: 22,
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        UText("SKT: 11/30",
-                                            fontWeight: FontWeight.w600,
-                                            color: UColor.WhiteColor),
-                                        UText("CVV: 721",
-                                            fontWeight: FontWeight.w600,
-                                            color: UColor.WhiteColor),
-                                      ],
-                                    ),
-                                  ],
-                                )),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 18),
-                              child: UText(
-                                "Pure Gold",
-                                fontWeight: FontWeight.w600,
-                                color: UColor.WhiteColor,
-                                fontSize: 22,
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.topRight,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 24, vertical: 18),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  UText(
-                                    "Kullanılabilir Limit:",
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 14,
-                                    color: UColor.WhiteColor,
-                                  ),
-                                  Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      UIcon(
-                                        Icons.currency_lira,
-                                        color: UColor.WhiteColor,
-                                        size: 16,
-                                      ),
-                                      UText(
-                                        "32,471.14",
+                                    Container(
+                                        alignment: Alignment.bottomCenter,
+                                        padding: const EdgeInsets.all(18),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            UText(
+                                              HelperMethods.cardNoWithSpaces(
+                                                  cardList[index].CardNo),
+                                              fontWeight: FontWeight.w700,
+                                              color: UColor.WhiteColor,
+                                              fontSize: 20,
+                                            ),
+                                            Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                UText("SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
+                                                    fontWeight: FontWeight.w600,
+                                                    color: UColor.WhiteColor),
+                                                UText("CVV: ${cardList[index].CVV}",
+                                                    fontWeight: FontWeight.w600,
+                                                    color: UColor.WhiteColor),
+                                              ],
+                                            ),
+                                          ],
+                                        )),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 18),
+                                      child: UText(
+                                        cardList[index].TypeName,
                                         fontWeight: FontWeight.w600,
                                         color: UColor.WhiteColor,
+                                        fontSize: 20,
                                       ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            )
-                          ],
-                        ));
-                  },
-                ),
-              ),
+                                    ),
+                                    Container(
+                                      alignment: Alignment.topRight,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 24, vertical: 18),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          UText(
+                                            Localizer.Get(Localizer.outstanding_balance),
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: UColor.WhiteColor,
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              UIcon(
+                                                Icons.currency_lira,
+                                                color: UColor.WhiteColor,
+                                                size: 16,
+                                              ),
+                                              UText(
+                                                HelperMethods.FormatBalance(cardList[index].OutstandingBalance),
+                                                fontWeight: FontWeight.w600,
+                                                color: UColor.WhiteColor,
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ));
+                          },
+                        );
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.waiting) {
+                        return const UCircularProgressIndicator();
+                      } else {
+                        return Center(
+                          child: HelperMethods.ShowAsset(
+                            UAsset.NETWORK_ERROR,
+                            height: USize.Height / 8,
+                            width: USize.Height / 8,
+                          ),
+                        );
+                      }
+                    },
+                  )),
             )
           ],
         ),

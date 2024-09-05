@@ -10,25 +10,27 @@ class DTOCreditCard
   double? OutstandingBalance;
   bool? Active;
   int? Type;
+  String? TypeName;
   int? CVV;
   int? BillingDay;
   DateTime? ExpirationDate;
 
-  DTOCreditCard({this.Id, this.CardNo, this.Limit, this.CVV, this.CustomerNo, this.Active, this.CurrentDebt, this.Type, this.ExpirationDate, this.BillingDay, this.OutstandingBalance});
+  DTOCreditCard({this.Id, this.CardNo, this.Limit, this.TypeName, this.CVV, this.CustomerNo, this.Active, this.CurrentDebt, this.Type, this.ExpirationDate, this.BillingDay, this.OutstandingBalance});
 
   factory DTOCreditCard.fromJson(Map<dynamic, dynamic> json) {
     return DTOCreditCard(
       Id: json['id'] as int?,
       CardNo: json['cardNo'] as String?,
       CustomerNo: json['customerNo'] as String?,
+      TypeName: json['typeName'] as String?,
       Limit: json['limit'] as double?,
       OutstandingBalance: json['outstandingBalance'] as double?,
-      CurrentDebt: json['currentDebt'] as double?,
+      CurrentDebt: double.parse(json['currentDebt'].toString()) as double?,
       Type: json['type'] as int?,
-      CVV: json['cVV'] as int?,
+      CVV: json['cvv'] as int?,
       BillingDay: json['billingDay'] as int?,
       Active: json['active'] as bool?,
-      ExpirationDate: json['expirationDate'] as DateTime?,
+      ExpirationDate: DateTime.parse(json['expirationDate']) as DateTime?,
     );
   }
 

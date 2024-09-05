@@ -227,11 +227,19 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                                 color: UColor.WhiteColor,
                               )));
                     } else {
+                      HelperMethods.SetLoadingScreen(context);
                       MessageContainer request = MessageContainer();
                       request.Add(
                           "DTOLogin", DTOLogin(IdentityNo: controller.text));
-                      MessageContainer response = await UProxy.Get(
-                          IService.GET_LOGIN_CREDENTIALS, request);
+                      MessageContainer response;
+                      try {
+                        response = await UProxy.Get(
+                            IService.GET_LOGIN_CREDENTIALS, request);
+                      } catch (e) {
+                        Navigator.pop(context);
+                        HelperMethods.ApiException(context, e.toString());
+                        return;
+                      }
                       if (response.GetWithKey(
                               "BankingApp.Common.DataTransferObjects.DTOLogin") !=
                           null) {
@@ -421,31 +429,44 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
 
   setNewCustomerValues() async {
     HelperMethods.SetLoadingScreen(context);
-    List cityList = await UProxy.Get(
-        IService.GET_PARAMETERS_BY_GROUP_CODE,
-        MessageContainer.builder(
-            {"Parameter": DTOParameter(GroupCode: "City")})).then((value) {
-      return value.GetWithKey("ParameterList");
-    });
-    List districtList = await UProxy.Get(
-        IService.GET_PARAMETERS_BY_GROUP_CODE,
-        MessageContainer.builder(
-            {"Parameter": DTOParameter(GroupCode: "District")})).then((value) {
-      return value.GetWithKey("ParameterList");
-    });
-    List professionList = await UProxy.Get(
-            IService.GET_PARAMETERS_BY_GROUP_CODE,
-            MessageContainer.builder(
-                {"Parameter": DTOParameter(GroupCode: "Profession")}))
-        .then((value) {
-      return value.GetWithKey("ParameterList");
-    });
-    List genderList = await UProxy.Get(
-        IService.GET_PARAMETERS_BY_GROUP_CODE,
-        MessageContainer.builder(
-            {"Parameter": DTOParameter(GroupCode: "Gender")})).then((value) {
-      return value.GetWithKey("ParameterList");
-    });
+
+    List cityList;
+    List districtList;
+    List professionList;
+    List genderList;
+
+    try {
+      cityList = await UProxy.Get(
+          IService.GET_PARAMETERS_BY_GROUP_CODE,
+          MessageContainer.builder(
+              {"Parameter": DTOParameter(GroupCode: "City")})).then((value) {
+        return value.GetWithKey("ParameterList");
+      });
+      districtList = await UProxy.Get(
+              IService.GET_PARAMETERS_BY_GROUP_CODE,
+              MessageContainer.builder(
+                  {"Parameter": DTOParameter(GroupCode: "District")}))
+          .then((value) {
+        return value.GetWithKey("ParameterList");
+      });
+      professionList = await UProxy.Get(
+              IService.GET_PARAMETERS_BY_GROUP_CODE,
+              MessageContainer.builder(
+                  {"Parameter": DTOParameter(GroupCode: "Profession")}))
+          .then((value) {
+        return value.GetWithKey("ParameterList");
+      });
+      genderList = await UProxy.Get(
+          IService.GET_PARAMETERS_BY_GROUP_CODE,
+          MessageContainer.builder(
+              {"Parameter": DTOParameter(GroupCode: "Gender")})).then((value) {
+        return value.GetWithKey("ParameterList");
+      });
+    } catch (e) {
+      Navigator.pop(context);
+      HelperMethods.ApiException(context, e.toString());
+      return;
+    }
     for (var i = 0; i < cityList.length; i++) {
       cityList[i] = DTOParameter.fromJson(cityList[i]);
     }

@@ -19,7 +19,7 @@ class UDropDownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width ?? USize.Width * 0.73,
+      width: width ?? USize.Width * 0.7,
       child: DropdownButtonFormField(
           decoration: InputDecoration(
             isDense: true,

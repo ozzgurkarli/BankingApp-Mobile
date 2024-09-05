@@ -59,7 +59,7 @@ class _OPENACCTState extends State<OPENACCT> {
       body: Center(
         child: Column(
           children: [
-            Gap(USize.Height / 5),
+            Gap(USize.Height / 6),
             ULabel(
               label: "*${Localizer.Get(Localizer.currency_type)}:",
               child: UDropDownButton(
@@ -84,7 +84,7 @@ class _OPENACCTState extends State<OPENACCT> {
                     });
                   }),
             ),
-            Gap(USize.Height / 30),
+            Gap(USize.Height / 25),
             ULabel(
               label: "*${Localizer.Get(Localizer.city)}:",
               child: UDropDownButton(
@@ -106,7 +106,7 @@ class _OPENACCTState extends State<OPENACCT> {
                     });
                   }),
             ),
-            Gap(USize.Height / 30),
+            Gap(USize.Height / 25),
             ULabel(
               label: "*${Localizer.Get(Localizer.district)}:",
               child: UDropDownButton(
@@ -130,21 +130,27 @@ class _OPENACCTState extends State<OPENACCT> {
                     });
                   }),
             ),
-            Gap(USize.Height / 17),
+            Gap(USize.Height / 12),
             UButton(
                 onPressed: () async {
                   HelperMethods.SetLoadingScreen(context);
-                  await UProxy.Post(
-                      IService.ADD_ACCOUNT,
-                      MessageContainer.builder({
-                        "DTOAccount": DTOAccount(
-                            Branch: districtValue,
-                            CurrencyCode: currencyValue.toString(),
-                            Currency: widget.currencyList
-                                .firstWhere((x) => x.Code == currencyValue)
-                                .Description,
-                            CustomerNo: widget.dtoCustomer.CustomerNo)
-                      }));
+                  try {
+                    await UProxy.Post(
+                        IService.ADD_ACCOUNT,
+                        MessageContainer.builder({
+                          "DTOAccount": DTOAccount(
+                              Branch: districtValue,
+                              CurrencyCode: currencyValue.toString(),
+                              Currency: widget.currencyList
+                                  .firstWhere((x) => x.Code == currencyValue)
+                                  .Description,
+                              CustomerNo: widget.dtoCustomer.CustomerNo)
+                        }));
+                  } catch (e) {
+                    Navigator.pop(context);
+                    HelperMethods.ApiException(context, e.toString());
+                    return;
+                  }
 
                   HelperMethods.SetSnackBar(context,
                       "Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.");

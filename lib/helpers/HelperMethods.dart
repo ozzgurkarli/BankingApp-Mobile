@@ -43,6 +43,14 @@ class HelperMethods {
     return iban;
   }
 
+  static String toExpirationDate(DateTime expirationDate){
+    return "${expirationDate.month}/${expirationDate.year.toString().substring(2)}";
+  }
+
+  static String cardNoWithSpaces(String cardNo) {
+    return "${cardNo.substring(0,4)} ${cardNo.substring(4,8)} ${cardNo.substring(8,12)} ${cardNo.substring(12)}";
+  }
+
   static InsertData(String fullName, String identityNo) async {
     var sp = await SharedPreferences.getInstance();
 
@@ -162,7 +170,7 @@ class HelperMethods {
                 ),
                 Gap(USize.Height / 25),
                 HelperMethods.ShowAsset(
-                  UAsset.ERROR_GIF,
+                  UAsset.NETWORK_ERROR,
                   height: USize.Height / 8,
                   width: USize.Height / 8,
                 ),

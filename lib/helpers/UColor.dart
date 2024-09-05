@@ -15,5 +15,7 @@ class UColor
   static const Color RedColor = Color(0xFFFE1D1D);
   static const Color RedHeavyColor = Color(0xFFB11B1B);
 
+  static const List<List<Color>> CardGradients = [ [], GoldPlusGradient, MidnightPrestigeGradient];
   static const List<Color> GoldPlusGradient = [ Color(0xFFF0C800), Color(0xFFB18F24),];
+  static const List<Color> MidnightPrestigeGradient = [ Color(0xFF4B0082), Color(0xFF8b0000), Color(0xFF000033), Color(0xFF4B0082)];
 }
