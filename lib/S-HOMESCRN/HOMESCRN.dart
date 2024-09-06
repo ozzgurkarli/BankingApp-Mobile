@@ -183,7 +183,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                   horizontal: 30,
                                 ),
                                 decoration: BoxDecoration(
-                                    gradient: LinearGradient(colors: UColor.CardGradients[cardList[index].Type], transform: GradientRotation(45)),
+                                    gradient: LinearGradient(colors: UColor.CardGradients[cardList[index].Type], transform: const GradientRotation(45)),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Stack(
                                   children: [
@@ -235,7 +235,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
                                           UText(
-                                            Localizer.Get(Localizer.outstanding_balance),
+                                            "${Localizer.Get(Localizer.outstanding_balance)}:",
                                             fontWeight: FontWeight.w400,
                                             fontSize: 14,
                                             color: UColor.WhiteColor,

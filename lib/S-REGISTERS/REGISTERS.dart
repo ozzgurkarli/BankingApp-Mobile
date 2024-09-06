@@ -56,6 +56,7 @@ class _REGISTERSState extends State<REGISTERS> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      isLogged: false,
       actions: [
         UTextButton(
           onPressed: () {

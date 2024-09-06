@@ -47,6 +47,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      isLogged: false,
       actions: [
         UTextButton(
           onPressed: () {

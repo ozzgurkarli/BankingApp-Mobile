@@ -12,11 +12,13 @@ class UScaffold extends StatefulWidget {
   List<Widget>? actions;
   Widget? leading;
   Widget? title;
+  bool? isLogged;
   FloatingActionButton? floatingActionButton;
 
   UScaffold(
       {super.key,
       this.body,
+      this.isLogged,
       this.actions,
       this.leading,
       this.floatingActionButton,
@@ -37,33 +39,40 @@ class _UScaffoldState extends State<UScaffold> {
             borderRadius: BorderRadius.only(bottomRight: Radius.circular(30))),
         leadingWidth: widget.leading == null ? USize.Width / 4.5 : 56,
         toolbarHeight: USize.Height / 13,
-        title: widget.leading == null ? widget.title : SizedBox(
-          width: USize.Width/4.5,
-          height: USize.Height/13,
-          child: GestureDetector(
-              onTap: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => const LGNIDNTY()),
-                    (route) => false);
-              },
-              child: HelperMethods.ShowAsset(UAsset.LOGO_WITH_SIDE_TEXT,
-                  width: USize.Width, height: USize.Height),
+        title: widget.leading == null
+            ? widget.title
+            : SizedBox(
+                width: USize.Width / 4.5,
+                height: USize.Height / 13,
+                child: GestureDetector(
+                  onTap: () {
+                    if (widget.isLogged != null) {Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LGNIDNTY()),
+                          (route) => false);
+                    } 
+                  },
+                  child: HelperMethods.ShowAsset(UAsset.LOGO_WITH_SIDE_TEXT,
+                      width: USize.Width, height: USize.Height),
+                ),
+              ),
+        leading: widget.leading ??
+            Padding(
+              padding: EdgeInsets.only(left: USize.Width / 44),
+              child: GestureDetector(
+                onTap: () {
+                  if (widget.isLogged != null) {Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LGNIDNTY()),
+                          (route) => false);
+                    }
+                },
+                child: HelperMethods.ShowAsset(UAsset.LOGO_WITH_SIDE_TEXT,
+                    width: USize.Width, height: USize.Height),
+              ),
             ),
-        ),
-        leading: widget.leading ?? Padding(
-          padding: EdgeInsets.only(left: USize.Width / 44),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LGNIDNTY()),
-                  (route) => false);
-            },
-            child: HelperMethods.ShowAsset(UAsset.LOGO_WITH_SIDE_TEXT,
-                width: USize.Width, height: USize.Height),
-          ),
-        ),
         centerTitle: true,
         actions: widget.actions,
         backgroundColor: UColor.PrimaryColor,

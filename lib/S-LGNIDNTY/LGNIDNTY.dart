@@ -46,6 +46,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      isLogged: false,
         actions: [
           UTextButton(
             onPressed: () {
