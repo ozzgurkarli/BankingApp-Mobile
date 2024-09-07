@@ -42,7 +42,7 @@ class UTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width ?? USize.Width * 0.6,
+      width: width ?? USize.Width * 0.7,
       child: TextField(
         maxLength: maxLength,
         onChanged: onChanged,

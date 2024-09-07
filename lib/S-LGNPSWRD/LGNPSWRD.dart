@@ -46,6 +46,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      isLogged: false,
         actions: [
           UTextButton(
             onPressed: () {

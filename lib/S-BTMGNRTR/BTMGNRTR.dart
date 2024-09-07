@@ -1,9 +1,16 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:parbank/S-ALLTRNSC/ALLTRNSC.dart';
+import 'package:parbank/S-CRDAPPLC/CRDAPPLC.dart';
 import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
-import 'package:parbank/S-LGNIDNTY/LGNIDNTY.dart';
+import 'package:parbank/S-OPENACCT/OPENACCT.dart';
+import 'package:parbank/api/IService.dart';
+import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
+import 'package:parbank/dto/DTOParameter.dart';
+import 'package:parbank/dto/MessageContainer.dart';
+import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
 import 'package:parbank/helpers/UColor.dart';
 
@@ -22,7 +29,108 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
     return Scaffold(
       body: <Widget>[
         HOMESCRN(customer: widget.customer),
-        const LGNIDNTY()
+        ALLTRNSC(
+          customer: widget.customer,
+          Transactions: [
+            [
+              Localizer.Get(Localizer.open_an_account),
+              () async {
+                HelperMethods.SetLoadingScreen(context);
+
+                List cityList;
+                List districtList;
+                List currencyList;
+
+                try {
+                  cityList = await UProxy.Get(
+                          IService.GET_PARAMETERS_BY_GROUP_CODE,
+                          MessageContainer.builder(
+                              {"Parameter": DTOParameter(GroupCode: "City")}))
+                      .then((value) {
+                    return value.GetWithKey("ParameterList");
+                  });
+                  districtList = await UProxy.Get(
+                      IService.GET_PARAMETERS_BY_GROUP_CODE,
+                      MessageContainer.builder({
+                        "Parameter": DTOParameter(GroupCode: "District")
+                      })).then((value) {
+                    return value.GetWithKey("ParameterList");
+                  });
+
+                  currencyList = await UProxy.Get(
+                      IService.GET_PARAMETERS_BY_GROUP_CODE,
+                      MessageContainer.builder({
+                        "Parameter": DTOParameter(GroupCode: "Currency")
+                      })).then((value) {
+                    return value.GetWithKey("ParameterList");
+                  });
+                } catch (e) {
+                  Navigator.pop(context);
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+
+                for (var i = 0; i < cityList.length; i++) {
+                  cityList[i] = DTOParameter.fromJson(cityList[i]);
+                }
+                for (var i = 0; i < districtList.length; i++) {
+                  districtList[i] = DTOParameter.fromJson(districtList[i]);
+                }
+                for (var i = 0; i < currencyList.length; i++) {
+                  currencyList[i] = DTOParameter.fromJson(currencyList[i]);
+                }
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => OPENACCT(
+                          dtoCustomer: widget.customer,
+                          cityList: cityList,
+                          districtList: districtList,
+                          currencyList: currencyList),
+                    ));
+              }
+            ],
+            [
+              Localizer.Get(Localizer.card_application),
+              () async {
+                HelperMethods.SetLoadingScreen(context);
+                List cardTypeList;
+
+                try{
+                  cardTypeList = await UProxy.Get(
+                        IService.GET_PARAMETERS_BY_GROUP_CODE,
+                        MessageContainer.builder(
+                            {"Parameter": DTOParameter(GroupCode: "CardType")}))
+                    .then((value) {
+                  return value.GetWithKey("ParameterList");
+                });
+                }
+                catch (e) {
+                        Navigator.pop(context);
+                        HelperMethods.ApiException(context, e.toString());
+                        return;
+                      }
+                for (var i = 0; i < cardTypeList.length; i++) {
+                  cardTypeList[i] = DTOParameter.fromJson(cardTypeList[i]);
+                }
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CRDAPPLC(
+                        dtoCustomer: widget.customer,
+                        cardTypeList: cardTypeList,
+                      ),
+                    ));
+              }
+            ],
+            [Localizer.Get(Localizer.market_information), () {}],
+            [Localizer.Get(Localizer.qr_code_operations), () {}],
+            [Localizer.Get(Localizer.credit_calculation), () {}],
+            [Localizer.Get(Localizer.settings), () {}],
+          ],
+        ),
       ][currentPageIndex],
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -35,13 +143,15 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
         backgroundColor: UColor.WhiteColor,
         destinations: <Widget>[
           NavigationDestination(
-            selectedIcon: const Icon(Icons.home),
+            selectedIcon: const Icon(
+              Icons.home,
+            ),
             icon: const Icon(Icons.home_outlined),
             label: Localizer.Get(Localizer.home),
           ),
           NavigationDestination(
             selectedIcon: const Icon(Icons.menu),
-            icon: const Badge(child: Icon(Icons.menu_outlined)),
+            icon: const Icon(Icons.menu_outlined),
             label: Localizer.Get(Localizer.all_transactions),
           ),
         ],

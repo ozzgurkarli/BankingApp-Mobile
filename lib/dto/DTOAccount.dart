@@ -6,19 +6,21 @@ class DTOAccount
   String? AccountNo;
   String? CustomerNo;
   String? Currency;
+  String? CurrencyCode;
   double? Balance;
   bool? Primary;
   bool? Active;
   int? Branch;
   List? TransactionHistory;
 
-  DTOAccount({this.Id, this.AccountNo, this.Currency, this.Balance, this.CustomerNo, this.Active, this.Branch, this.Primary, this.TransactionHistory});
+  DTOAccount({this.Id, this.AccountNo, this.Currency, this.CurrencyCode, this.Balance, this.CustomerNo, this.Active, this.Branch, this.Primary, this.TransactionHistory});
 
   factory DTOAccount.fromJson(Map<dynamic, dynamic> json) {
     return DTOAccount(
       Id: json['id'] as int?,
       AccountNo: json['accountNo'] as String?,
       CustomerNo: json['customerNo'] as String?,
+      CurrencyCode: json['currencyCode'] as String?,
       Currency: json['currency'] as String?,
       Balance: double.parse(json['balance'].toString()) as double?,
       Primary: json['primary'] as bool?,
@@ -35,6 +37,7 @@ class DTOAccount
       'AccountNo': AccountNo,
       'CustomerNo': CustomerNo,
       'Balance': Balance,
+      'CurrencyCode': CurrencyCode,
       'Primary': Primary,
       'TransactionHistory': TransactionHistory,
       'Currency': Currency,
