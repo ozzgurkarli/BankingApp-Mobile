@@ -140,7 +140,8 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                                           UButton(
                                             onPressed: () async {
                                               await HelperMethods.DeleteData();
-                                              setState(() {});
+                                              setState(() {
+                                                Navigator.pop(context);});
                                             },
                                             redButton: true,
                                             child: UText(

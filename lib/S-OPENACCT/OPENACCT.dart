@@ -69,7 +69,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   hintText: "*${Localizer.Get(Localizer.select_a_currency)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.currencyList.map((e) {
-                    List<String> currencyLocalizer = e.Detail1.split(':');
+                    List<String> currencyLocalizer = e.Detail1.split(';');
                     return DropdownMenuItem(
                       value: e.Code,
                       child: UText(e.Description +
@@ -103,6 +103,7 @@ class _OPENACCTState extends State<OPENACCT> {
                     setState(() {
                       cityError = null;
                       cityValue = e as int;
+                      districtValue = 0;
                     });
                   }),
             ),
@@ -133,6 +134,30 @@ class _OPENACCTState extends State<OPENACCT> {
             Gap(USize.Height / 12),
             UButton(
                 onPressed: () async {
+                  if (cityValue == 0) {
+                    setState(() {
+                      cityError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if (currencyValue == 0) {
+                    setState(() {
+                      currencyError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if (districtValue == 0) {
+                    setState(() {
+                      districtError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+
+                  if (districtError != null ||
+                      cityError != null ||
+                      currencyError != null) {
+                    return;
+                  }
                   HelperMethods.SetLoadingScreen(context);
                   try {
                     await UProxy.Post(
@@ -140,6 +165,7 @@ class _OPENACCTState extends State<OPENACCT> {
                         MessageContainer.builder({
                           "DTOAccount": DTOAccount(
                               Branch: districtValue,
+                              Primary: false,
                               CurrencyCode: currencyValue.toString(),
                               Currency: widget.currencyList
                                   .firstWhere((x) => x.Code == currencyValue)
@@ -152,8 +178,8 @@ class _OPENACCTState extends State<OPENACCT> {
                     return;
                   }
 
-                  HelperMethods.SetSnackBar(context,
-                      "Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.");
+                  HelperMethods.SetSnackBar(
+                      context, Localizer.Get(Localizer.account_added));
                   int count = 0;
                   Navigator.of(context).popUntil((_) => count++ >= 2);
                 },

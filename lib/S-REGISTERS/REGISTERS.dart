@@ -121,6 +121,7 @@ class _REGISTERSState extends State<REGISTERS> {
                     setState(() {
                       cityError = null;
                       cityValue = e as int;
+                      districtValue = 0;
                     });
                   }),
             ),

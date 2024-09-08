@@ -2,8 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:hugeicons/hugeicons.dart';
+import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
+import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UCircularProgressIndicator.dart';
 import 'package:parbank/components/UIcon.dart';
 import 'package:parbank/components/UIconButton.dart';
@@ -29,6 +32,8 @@ class HOMESCRN extends StatefulWidget {
 }
 
 class _HOMESCRNState extends State<HOMESCRN> {
+  List? accountList;
+
   @override
   Widget build(BuildContext context) {
     return UScaffold(
@@ -70,6 +75,8 @@ class _HOMESCRNState extends State<HOMESCRN> {
                             accList[i] = DTOAccount.fromJson(accList[i]);
                           }
                         }
+
+                        accountList = accList;
                         return PageView.builder(
                           itemCount: accList.length,
                           itemBuilder: (context, index) {
@@ -175,6 +182,20 @@ class _HOMESCRNState extends State<HOMESCRN> {
                             cardList[i] = DTOCreditCard.fromJson(cardList[i]);
                           }
                         }
+
+                        if (cardList.isEmpty) {
+                          return Center(
+                            child: GestureDetector(
+                              onTap: (){HelperMethods.SetSnackBar(context, Localizer.Get(Localizer.no_credit_card));},
+                              child: HelperMethods.ShowAsset(
+                                UAsset.NOT_FOUND,
+                                height: USize.Height / 8,
+                                width: USize.Height / 8,
+                              ),
+                            ),
+                          );
+                        }
+
                         return PageView.builder(
                           itemCount: cardList.length,
                           itemBuilder: (context, index) {
@@ -183,7 +204,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                   horizontal: 30,
                                 ),
                                 decoration: BoxDecoration(
-                                    gradient: LinearGradient(colors: UColor.CardGradients[cardList[index].Type], transform: const GradientRotation(45)),
+                                    gradient: LinearGradient(
+                                        colors: UColor.CardGradients[
+                                            cardList[index].Type],
+                                        transform: const GradientRotation(45)),
                                     borderRadius: BorderRadius.circular(12)),
                                 child: Stack(
                                   children: [
@@ -206,10 +230,12 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: [
-                                                UText("SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
+                                                UText(
+                                                    "SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
                                                     fontWeight: FontWeight.w600,
                                                     color: UColor.WhiteColor),
-                                                UText("CVV: ${cardList[index].CVV}",
+                                                UText(
+                                                    "CVV: ${cardList[index].CVV}",
                                                     fontWeight: FontWeight.w600,
                                                     color: UColor.WhiteColor),
                                               ],
@@ -249,7 +275,9 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                                 size: 16,
                                               ),
                                               UText(
-                                                HelperMethods.FormatBalance(cardList[index].OutstandingBalance),
+                                                HelperMethods.FormatBalance(
+                                                    cardList[index]
+                                                        .OutstandingBalance),
                                                 fontWeight: FontWeight.w600,
                                                 color: UColor.WhiteColor,
                                               ),
@@ -275,6 +303,54 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         );
                       }
                     },
+                  )),
+            ),
+            Gap(USize.Height / 17),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
+              child: UButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MNYTRNSFR(
+                                  accountList: accountList,
+                                  customer: widget.customer,
+                                )));
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UIcon(
+                        HugeIcons.strokeRoundedMoney02,
+                        color: UColor.WhiteColor,
+                      ),
+                      Gap(USize.Width / 50),
+                      UText(
+                        Localizer.Get(Localizer.money_transfer),
+                        color: UColor.WhiteColor,
+                      ),
+                    ],
+                  )),
+            ),
+            Gap(USize.Height / 67),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
+              child: UButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UIcon(
+                        Icons.history,
+                        color: UColor.WhiteColor,
+                      ),
+                      Gap(USize.Width / 50),
+                      UText(
+                        Localizer.Get(Localizer.last_transactions),
+                        color: UColor.WhiteColor,
+                      ),
+                    ],
                   )),
             )
           ],

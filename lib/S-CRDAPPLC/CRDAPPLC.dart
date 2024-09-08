@@ -124,6 +124,27 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
             Gap(USize.Height / 12),
             UButton(
                 onPressed: () async {
+                  if(cardTypeValue == 0){
+                    setState(() {
+                      cardTypeError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if(billingDayValue == 0){
+                    setState(() {
+                      billingDayError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if(requestedLimitController.text.isEmpty){
+                    setState(() {
+                      requestedLimitError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+
+                  if (requestedLimitError != null ||
+                      billingDayError != null ||
+                      cardTypeError != null) {
+                    return;
+                  }
                   HelperMethods.SetLoadingScreen(context);
                   try {
                     await UProxy.Post(
