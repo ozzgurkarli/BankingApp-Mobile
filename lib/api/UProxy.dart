@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
+import 'package:parbank/api/ENV.dart';
 import 'package:parbank/dto/MessageContainer.dart';
-import 'package:parbank/helpers/ENV.dart';
 import 'package:dio/dio.dart';
 
 class UProxy {

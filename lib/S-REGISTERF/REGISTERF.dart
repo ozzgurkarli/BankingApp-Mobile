@@ -72,7 +72,7 @@ class _REGISTERFState extends State<REGISTERF> {
             ),
             Gap(USize.Height / 27),
             ULabel(
-              label: "*${Localizer.Get(Localizer.name)}:",
+              label: "${Localizer.Get(Localizer.name)}:",
               child: UTextField(
                 onChanged: (p0) {
                   setState(() {
@@ -81,7 +81,7 @@ class _REGISTERFState extends State<REGISTERF> {
                 },
                 controller: nameController,
                 textCapitalization: TextCapitalization.words,
-                hintText: "*${Localizer.Get(Localizer.name)}",
+                hintText: "${Localizer.Get(Localizer.name)}",
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: nameError,
                 prefixIcon: const Icon(Icons.person_outline),
@@ -90,7 +90,7 @@ class _REGISTERFState extends State<REGISTERF> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.surname)}:",
+              label: "${Localizer.Get(Localizer.surname)}:",
               child: UTextField(
                 onChanged: (p0) {
                   setState(() {
@@ -99,7 +99,7 @@ class _REGISTERFState extends State<REGISTERF> {
                 },
                 controller: surnameController,
                 textCapitalization: TextCapitalization.words,
-                hintText: "*${Localizer.Get(Localizer.surname)}",
+                hintText: "${Localizer.Get(Localizer.surname)}",
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: surnameError,
                 prefixIcon: const Icon(Icons.person_outline),
@@ -108,7 +108,7 @@ class _REGISTERFState extends State<REGISTERF> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.identity_no)}:",
+              label: "${Localizer.Get(Localizer.identity_no)}:",
               child: UTextField(
                 onChanged: (p0) {
                   setState(() {
@@ -121,7 +121,7 @@ class _REGISTERFState extends State<REGISTERF> {
                 ],
                 controller: identityController,
                 keyboardType: TextInputType.number,
-                hintText: "*${Localizer.Get(Localizer.identity_no)}",
+                hintText: "${Localizer.Get(Localizer.identity_no)}",
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: identityError,
                 prefixIcon: const Icon(Icons.branding_watermark_outlined),
@@ -130,7 +130,7 @@ class _REGISTERFState extends State<REGISTERF> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.email)}:",
+              label: "${Localizer.Get(Localizer.email)}:",
               child: UTextField(
                 onChanged: (p0) {
                   setState(() {
@@ -138,7 +138,7 @@ class _REGISTERFState extends State<REGISTERF> {
                   });
                 },
                 controller: mailController,
-                hintText: "*${Localizer.Get(Localizer.email)}",
+                hintText: "${Localizer.Get(Localizer.email)}",
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: mailError,
                 prefixIcon: const Icon(Icons.email_outlined),
@@ -151,7 +151,7 @@ class _REGISTERFState extends State<REGISTERF> {
                 phoneError = null;
               },
               child: ULabel(
-                label: "*${Localizer.Get(Localizer.phone_no)}:",
+                label: "${Localizer.Get(Localizer.phone_no)}:",
                 child: UTextField(
                   inputFormatters: [
                     MaskTextInputFormatter(
@@ -165,7 +165,7 @@ class _REGISTERFState extends State<REGISTERF> {
                     });
                   },
                   controller: phoneController,
-                  hintText: "*${Localizer.Get(Localizer.phone_no)}",
+                  hintText: "${Localizer.Get(Localizer.phone_no)}",
                   fillColor: UColor.WhiteHeavyColor,
                   errorText: phoneError,
                   keyboardType: TextInputType.number,

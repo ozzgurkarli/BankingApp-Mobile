@@ -61,12 +61,12 @@ class _OPENACCTState extends State<OPENACCT> {
           children: [
             Gap(USize.Height / 6),
             ULabel(
-              label: "*${Localizer.Get(Localizer.currency_type)}:",
+              label: "${Localizer.Get(Localizer.currency_type)}:",
               child: UDropDownButton(
                   errorText: currencyError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.currency_exchange),
-                  hintText: "*${Localizer.Get(Localizer.select_a_currency)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_currency)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.currencyList.map((e) {
                     List<String> currencyLocalizer = e.Detail1.split(';');
@@ -86,12 +86,12 @@ class _OPENACCTState extends State<OPENACCT> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.city)}:",
+              label: "${Localizer.Get(Localizer.city)}:",
               child: UDropDownButton(
                   errorText: cityError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_city)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_city)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.cityList.map((e) {
                     return DropdownMenuItem(
@@ -109,12 +109,12 @@ class _OPENACCTState extends State<OPENACCT> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.district)}:",
+              label: "${Localizer.Get(Localizer.district)}:",
               child: UDropDownButton(
                   errorText: districtError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_district)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_district)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.districtList
                       .where((x) => x.Detail1 == cityValue.toString())

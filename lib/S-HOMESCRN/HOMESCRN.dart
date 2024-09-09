@@ -33,6 +33,7 @@ class HOMESCRN extends StatefulWidget {
 
 class _HOMESCRNState extends State<HOMESCRN> {
   List? accountList;
+  bool isAccountsAvailable = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
         Padding(
           padding: const EdgeInsets.only(top: 8.0),
           child: UIconButton(
-            icon: const Icon(
+            icon: UIcon(
               Icons.person_outline,
               color: UColor.WhiteColor,
             ),
@@ -76,6 +77,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                           }
                         }
 
+                        isAccountsAvailable = true;
                         accountList = accList;
                         return PageView.builder(
                           itemCount: accList.length,
@@ -310,6 +312,9 @@ class _HOMESCRNState extends State<HOMESCRN> {
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
                   onPressed: () {
+                    if(!isAccountsAvailable){
+                      return;
+                    }
                     Navigator.push(
                         context,
                         MaterialPageRoute(

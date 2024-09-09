@@ -6,11 +6,13 @@ import 'package:parbank/S-ALLTRNSC/ALLTRNSC.dart';
 import 'package:parbank/S-CRDAPPLC/CRDAPPLC.dart';
 import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
 import 'package:parbank/S-LGNIDNTY/LGNIDNTY.dart';
+import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
 import 'package:parbank/S-OPENACCT/OPENACCT.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UText.dart';
+import 'package:parbank/dto/DTOAccount.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
 import 'package:parbank/dto/DTOParameter.dart';
 import 'package:parbank/dto/MessageContainer.dart';
@@ -43,31 +45,19 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
               () async {
                 HelperMethods.SetLoadingScreen(context);
 
+                List parList = [
+                  DTOParameter(GroupCode: "City"),
+                  DTOParameter(GroupCode: "District"),
+                  DTOParameter(GroupCode: "Currency")
+                ];
                 List cityList;
                 List districtList;
                 List currencyList;
 
                 try {
-                  cityList = await UProxy.Get(
-                          IService.GET_PARAMETERS_BY_GROUP_CODE,
-                          MessageContainer.builder(
-                              {"Parameter": DTOParameter(GroupCode: "City")}))
+                  parList = await UProxy.Get(IService.GET_MULTIPLE_GROUP_CODE,
+                          MessageContainer.builder({"ParameterList": parList}))
                       .then((value) {
-                    return value.GetWithKey("ParameterList");
-                  });
-                  districtList = await UProxy.Get(
-                      IService.GET_PARAMETERS_BY_GROUP_CODE,
-                      MessageContainer.builder({
-                        "Parameter": DTOParameter(GroupCode: "District")
-                      })).then((value) {
-                    return value.GetWithKey("ParameterList");
-                  });
-
-                  currencyList = await UProxy.Get(
-                      IService.GET_PARAMETERS_BY_GROUP_CODE,
-                      MessageContainer.builder({
-                        "Parameter": DTOParameter(GroupCode: "Currency")
-                      })).then((value) {
                     return value.GetWithKey("ParameterList");
                   });
                 } catch (e) {
@@ -75,16 +65,16 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                   HelperMethods.ApiException(context, e.toString());
                   return;
                 }
+                for (var i = 0; i < parList.length; i++) {
+                  parList[i] = DTOParameter.fromJson(parList[i]);
+                }
 
-                for (var i = 0; i < cityList.length; i++) {
-                  cityList[i] = DTOParameter.fromJson(cityList[i]);
-                }
-                for (var i = 0; i < districtList.length; i++) {
-                  districtList[i] = DTOParameter.fromJson(districtList[i]);
-                }
-                for (var i = 0; i < currencyList.length; i++) {
-                  currencyList[i] = DTOParameter.fromJson(currencyList[i]);
-                }
+                cityList = parList.where((x) => x.GroupCode == "City").toList();
+                districtList =
+                    parList.where((x) => x.GroupCode == "District").toList();
+                currencyList =
+                    parList.where((x) => x.GroupCode == "Currency").toList();
+
                 Navigator.pop(context);
                 Navigator.push(
                     context,
@@ -130,7 +120,43 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     ));
               }
             ],
-            [Localizer.Get(Localizer.money_transfer), () {}],
+            [
+              Localizer.Get(Localizer.money_transfer),
+              () async {
+                HelperMethods.SetLoadingScreen(context);
+                List accountList;
+
+                try {
+                  accountList = await UProxy.Get(
+                      IService.GET_ACCOUNTS,
+                      MessageContainer.builder({
+                        "DTOAccount":
+                            DTOAccount(CustomerNo: widget.customer.CustomerNo),
+                      })).then((value) {
+                    return value.GetWithKey("AccountList");
+                  });
+                } catch (e) {
+                  Navigator.pop(context);
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+
+                if (accountList.isNotEmpty && accountList.first is Map) {
+                  for (var i = 0; i < accountList.length; i++) {
+                    accountList[i] = DTOAccount.fromJson(accountList[i]);
+                  }
+                }
+
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MNYTRNSFR(
+                              accountList: accountList,
+                              customer: widget.customer,
+                            )));
+              }
+            ],
             [Localizer.Get(Localizer.last_transactions), () {}],
             [Localizer.Get(Localizer.market_information), () {}],
             [Localizer.Get(Localizer.qr_code_operations), () {}],

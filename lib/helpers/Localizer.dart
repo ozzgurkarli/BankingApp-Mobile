@@ -78,6 +78,7 @@ class Localizer
   static const List<String> account_added = ["Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.", "Account created successfully. You can see it under 'My Accounts' on the main page."];
   static const List<String> card_approved = ["Kart başvurun onaylandı. Ana sayfada 'Kartlarım' arasında görebilirsin.", "Your card application approved. You can see it under 'My Cards' on the main page."];
   static const List<String> balance = ["Bakiye", "Balance"];
+    static const List<String> send_postdated = ["İleri Tarihli Gönder", "Send Postdated"];
     static const List<String> transaction_queued = ["İşlemin sıraya alındı.", "Your process has been queued."];
     static const List<String> no_credit_card = ["Henüz bir kredi kartın yok. 'Tüm İşlemler' menüsünden kart başvurusunda bulunabilirsin.", 
 "You don't have a credit card yet. You can apply for one from the 'All Transactions' menu."];

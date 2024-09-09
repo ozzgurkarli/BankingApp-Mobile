@@ -41,7 +41,15 @@ class MessageContainer {
     Map<String, dynamic> finalList = {};
     
     for (var item in contents.entries) {
-      temp[item.key] = item.value.toJson();
+      if(item.value is List){
+        for (var i = 0; i < item.value.length; i++) {
+          item.value[i] = item.value[i].toJson();
+        }
+        temp[item.key] = item.value;
+      }
+      else{
+        temp[item.key] = item.value.toJson();
+      }
     }
 
     finalList["contents"] = temp;

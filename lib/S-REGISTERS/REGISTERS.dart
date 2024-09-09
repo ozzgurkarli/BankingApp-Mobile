@@ -81,12 +81,12 @@ class _REGISTERSState extends State<REGISTERS> {
             ),
             Gap(USize.Height / 27),
             ULabel(
-              label: "*${Localizer.Get(Localizer.gender)}:",
+              label: "${Localizer.Get(Localizer.gender)}:",
               child: UDropDownButton(
                   errorText: genderError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.wc),
-                  hintText: "*${Localizer.Get(Localizer.select_a_gender)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_gender)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.genderList.map((e) {
                     List<String> genderLocalizer = e.Description.split(';');
@@ -104,12 +104,12 @@ class _REGISTERSState extends State<REGISTERS> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.city)}:",
+              label: "${Localizer.Get(Localizer.city)}:",
               child: UDropDownButton(
                   errorText: cityError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_city)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_city)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.cityList.map((e) {
                     return DropdownMenuItem(
@@ -127,12 +127,12 @@ class _REGISTERSState extends State<REGISTERS> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.district)}:",
+              label: "${Localizer.Get(Localizer.district)}:",
               child: UDropDownButton(
                   errorText: districtError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_district)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_district)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.districtList
                       .where((x) => x.Detail1 == cityValue.toString())
@@ -151,12 +151,12 @@ class _REGISTERSState extends State<REGISTERS> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.profession)}:",
+              label: "${Localizer.Get(Localizer.profession)}:",
               child: UDropDownButton(
                   errorText: professionError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.cabin),
-                  hintText: "*${Localizer.Get(Localizer.select_a_profession)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_profession)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.professionList.map((e) {
                     List<String> professionLocalizer = e.Description.split(';');
@@ -174,7 +174,7 @@ class _REGISTERSState extends State<REGISTERS> {
             ),
             Gap(USize.Height / 33),
             ULabel(
-              label: "*${Localizer.Get(Localizer.monthly_income)}:",
+              label: "${Localizer.Get(Localizer.monthly_income)}:",
               child: UTextField(
                 inputFormatters: [TextInputMask(mask: '9+,999', reverse: true)],
                 onTap: () {
@@ -183,7 +183,7 @@ class _REGISTERSState extends State<REGISTERS> {
                   });
                 },
                 controller: incomeController,
-                hintText: "*${Localizer.Get(Localizer.monthly_income)}",
+                hintText: "${Localizer.Get(Localizer.monthly_income)}",
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: incomeError,
                 prefixIcon: const Icon(Icons.currency_lira),
