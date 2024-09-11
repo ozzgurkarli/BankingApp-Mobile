@@ -41,7 +41,7 @@ class _OPENACCTState extends State<OPENACCT> {
   String? currencyError;
 
   int cityValue = 0;
-  int districtValue = 0;
+  int? districtValue;
   int currencyValue = 0;
 
   @override
@@ -79,6 +79,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   }).toList(),
                   onChanged: (e) {
                     setState(() {
+                      cityValue = 1;
                       currencyError = null;
                       currencyValue = e as int;
                     });
@@ -101,9 +102,9 @@ class _OPENACCTState extends State<OPENACCT> {
                   }).toList(),
                   onChanged: (e) {
                     setState(() {
+                      districtValue = null;
                       cityError = null;
                       cityValue = e as int;
-                      districtValue = 0;
                     });
                   }),
             ),
@@ -116,6 +117,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   prefixIcon: const Icon(Icons.location_city_outlined),
                   hintText: "${Localizer.Get(Localizer.select_a_district)}",
                   fillColor: UColor.WhiteHeavyColor,
+                  value: districtValue,
                   items: widget.districtList
                       .where((x) => x.Detail1 == cityValue.toString())
                       .map((e) {

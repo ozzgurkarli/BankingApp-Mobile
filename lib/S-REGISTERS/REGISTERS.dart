@@ -48,7 +48,7 @@ class _REGISTERSState extends State<REGISTERS> {
   String? incomeError;
 
   int cityValue = 0;
-  int districtValue = 0;
+  int? districtValue;
   int genderValue = 0;
   int professionValue = 0;
   TextEditingController incomeController = TextEditingController();
@@ -119,9 +119,9 @@ class _REGISTERSState extends State<REGISTERS> {
                   }).toList(),
                   onChanged: (e) {
                     setState(() {
+                      districtValue = null;
                       cityError = null;
                       cityValue = e as int;
-                      districtValue = 0;
                     });
                   }),
             ),
@@ -130,6 +130,7 @@ class _REGISTERSState extends State<REGISTERS> {
               label: "${Localizer.Get(Localizer.district)}:",
               child: UDropDownButton(
                   errorText: districtError,
+                  value: districtValue,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
                   hintText: "${Localizer.Get(Localizer.select_a_district)}",

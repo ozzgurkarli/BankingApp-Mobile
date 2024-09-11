@@ -454,23 +454,15 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
       return;
     }
 
+    for (var i = 0; i < parList.length; i++) {
+      parList[i] = DTOParameter.fromJson(parList[i]);
+    }
+
     cityList = parList.where((x) => x.GroupCode == "City").toList();
     districtList = parList.where((x) => x.GroupCode == "District").toList();
     professionList = parList.where((x) => x.GroupCode == "Profession").toList();
     genderList = parList.where((x) => x.GroupCode == "Gender").toList();
 
-    for (var i = 0; i < cityList.length; i++) {
-      cityList[i] = DTOParameter.fromJson(cityList[i]);
-    }
-    for (var i = 0; i < districtList.length; i++) {
-      districtList[i] = DTOParameter.fromJson(districtList[i]);
-    }
-    for (var i = 0; i < professionList.length; i++) {
-      professionList[i] = DTOParameter.fromJson(professionList[i]);
-    }
-    for (var i = 0; i < genderList.length; i++) {
-      genderList[i] = DTOParameter.fromJson(genderList[i]);
-    }
     Navigator.pop(context);
     Navigator.push(
         context,
