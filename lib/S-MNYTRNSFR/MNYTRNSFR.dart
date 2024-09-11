@@ -17,6 +17,7 @@ import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/USegmentedButton.dart';
 import 'package:parbank/components/UText.dart';
 import 'package:parbank/components/UTextField.dart';
+import 'package:parbank/dto/DTOAccount.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
 import 'package:parbank/dto/DTOTransfer.dart';
 import 'package:parbank/dto/MessageContainer.dart';
@@ -45,8 +46,8 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
 
   bool identityNoEnabled = true;
   bool? dateValue = false;
-  int? senderAccountValue;
-  String? currencyValue;
+
+  DTOAccount? selectedAccount;
 
   TextEditingController recipientController = TextEditingController();
   TextEditingController dateController = TextEditingController();
@@ -105,8 +106,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                         segmentSelected = {"0"};
                       }
                       senderAccountError = null;
-                      senderAccountValue = e.Id;
-                      currencyValue = e.Currency;
+                      selectedAccount = e;
                     });
                   }),
             ),
@@ -248,7 +248,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
             Gap(USize.Height / 25),
             UButton(
                 onPressed: () async{
-                  if (senderAccountValue == 0 || senderAccountValue == null) {
+                  if (selectedAccount == null) {
                     setState(() {
                       senderAccountError = Localizer.Get(
                           Localizer.this_field_cannot_be_left_empty);
@@ -290,10 +290,10 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                   DTOTransfer dtoTransfer = DTOTransfer(
                     Amount:
                         double.parse(amountController.text.replaceAll(',', '')),
-                    SenderAccountId: senderAccountValue,
+                    SenderAccountId: selectedAccount!.Id,
                     SenderCustomerNo: widget.customer.CustomerNo,
                     RecipientAccount: recipientController.text,
-                    Currency: currencyValue,
+                    Currency: selectedAccount!.Currency,
                   );
                   dtoTransfer.OrderDate = DateTime.parse(
                       dateController.text.split('/')[2] +
