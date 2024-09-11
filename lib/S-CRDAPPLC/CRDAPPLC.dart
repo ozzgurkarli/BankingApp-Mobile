@@ -59,12 +59,12 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
           children: [
             Gap(USize.Height / 6),
             ULabel(
-              label: "*${Localizer.Get(Localizer.card_type)}:",
+              label: "${Localizer.Get(Localizer.card_type)}:",
               child: UDropDownButton(
                   errorText: cardTypeError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.credit_card),
-                  hintText: "*${Localizer.Get(Localizer.select_a_card_type)}",
+                  hintText: Localizer.Get(Localizer.select_a_card_type),
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.cardTypeList.map((e) {
                     return DropdownMenuItem(
@@ -81,12 +81,12 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.billing_day)}:",
+              label: "${Localizer.Get(Localizer.billing_day)}:",
               child: UDropDownButton(
                   errorText: billingDayError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.calendar_month),
-                  hintText: "*${Localizer.Get(Localizer.select_a_billing_day)}",
+                  hintText: Localizer.Get(Localizer.select_a_billing_day),
                   fillColor: UColor.WhiteHeavyColor,
                   items: billingDayList.map((e) {
                     return DropdownMenuItem(
@@ -103,7 +103,7 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.requested_limit)}:",
+              label: "${Localizer.Get(Localizer.requested_limit)}:",
               child: UTextField(
                 inputFormatters: [
                   TextInputMask(mask: '9+,999,999', reverse: true)
@@ -114,7 +114,7 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
                   });
                 },
                 controller: requestedLimitController,
-                hintText: "*${Localizer.Get(Localizer.requested_limit)}",
+                hintText: Localizer.Get(Localizer.requested_limit),
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: requestedLimitError,
                 prefixIcon: const Icon(Icons.currency_lira),
@@ -124,6 +124,27 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
             Gap(USize.Height / 12),
             UButton(
                 onPressed: () async {
+                  if(cardTypeValue == 0){
+                    setState(() {
+                      cardTypeError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if(billingDayValue == 0){
+                    setState(() {
+                      billingDayError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if(requestedLimitController.text.isEmpty){
+                    setState(() {
+                      requestedLimitError = Localizer.Get(Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+
+                  if (requestedLimitError != null ||
+                      billingDayError != null ||
+                      cardTypeError != null) {
+                    return;
+                  }
                   HelperMethods.SetLoadingScreen(context);
                   try {
                     await UProxy.Post(

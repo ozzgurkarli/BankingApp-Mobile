@@ -41,7 +41,7 @@ class _OPENACCTState extends State<OPENACCT> {
   String? currencyError;
 
   int cityValue = 0;
-  int districtValue = 0;
+  int? districtValue;
   int currencyValue = 0;
 
   @override
@@ -61,15 +61,15 @@ class _OPENACCTState extends State<OPENACCT> {
           children: [
             Gap(USize.Height / 6),
             ULabel(
-              label: "*${Localizer.Get(Localizer.currency_type)}:",
+              label: "${Localizer.Get(Localizer.currency_type)}:",
               child: UDropDownButton(
                   errorText: currencyError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.currency_exchange),
-                  hintText: "*${Localizer.Get(Localizer.select_a_currency)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_currency)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.currencyList.map((e) {
-                    List<String> currencyLocalizer = e.Detail1.split(':');
+                    List<String> currencyLocalizer = e.Detail1.split(';');
                     return DropdownMenuItem(
                       value: e.Code,
                       child: UText(e.Description +
@@ -79,6 +79,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   }).toList(),
                   onChanged: (e) {
                     setState(() {
+                      cityValue = 1;
                       currencyError = null;
                       currencyValue = e as int;
                     });
@@ -86,12 +87,12 @@ class _OPENACCTState extends State<OPENACCT> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.city)}:",
+              label: "${Localizer.Get(Localizer.city)}:",
               child: UDropDownButton(
                   errorText: cityError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_city)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_city)}",
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.cityList.map((e) {
                     return DropdownMenuItem(
@@ -101,6 +102,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   }).toList(),
                   onChanged: (e) {
                     setState(() {
+                      districtValue = null;
                       cityError = null;
                       cityValue = e as int;
                     });
@@ -108,13 +110,14 @@ class _OPENACCTState extends State<OPENACCT> {
             ),
             Gap(USize.Height / 25),
             ULabel(
-              label: "*${Localizer.Get(Localizer.district)}:",
+              label: "${Localizer.Get(Localizer.district)}:",
               child: UDropDownButton(
                   errorText: districtError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "*${Localizer.Get(Localizer.select_a_district)}",
+                  hintText: "${Localizer.Get(Localizer.select_a_district)}",
                   fillColor: UColor.WhiteHeavyColor,
+                  value: districtValue,
                   items: widget.districtList
                       .where((x) => x.Detail1 == cityValue.toString())
                       .map((e) {
@@ -133,6 +136,30 @@ class _OPENACCTState extends State<OPENACCT> {
             Gap(USize.Height / 12),
             UButton(
                 onPressed: () async {
+                  if (cityValue == 0) {
+                    setState(() {
+                      cityError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if (currencyValue == 0) {
+                    setState(() {
+                      currencyError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+                  if (districtValue == 0) {
+                    setState(() {
+                      districtError = Localizer.Get(
+                          Localizer.this_field_cannot_be_left_empty);
+                    });
+                  }
+
+                  if (districtError != null ||
+                      cityError != null ||
+                      currencyError != null) {
+                    return;
+                  }
                   HelperMethods.SetLoadingScreen(context);
                   try {
                     await UProxy.Post(
@@ -140,6 +167,7 @@ class _OPENACCTState extends State<OPENACCT> {
                         MessageContainer.builder({
                           "DTOAccount": DTOAccount(
                               Branch: districtValue,
+                              Primary: false,
                               CurrencyCode: currencyValue.toString(),
                               Currency: widget.currencyList
                                   .firstWhere((x) => x.Code == currencyValue)
@@ -152,8 +180,8 @@ class _OPENACCTState extends State<OPENACCT> {
                     return;
                   }
 
-                  HelperMethods.SetSnackBar(context,
-                      "Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.");
+                  HelperMethods.SetSnackBar(
+                      context, Localizer.Get(Localizer.account_added));
                   int count = 0;
                   Navigator.of(context).popUntil((_) => count++ >= 2);
                 },

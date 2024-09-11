@@ -143,7 +143,7 @@ class HelperMethods {
     );
   }
 
-  static ApiException(BuildContext context, String exception) {
+  static ApiException(BuildContext context, String exception, {int? popUntil}) {
     showModalBottomSheet(
       context: context,
       barrierColor: UColor.BarrierColor,
@@ -180,7 +180,8 @@ class HelperMethods {
                 UButton(
                     onPressed: () {
                       int count = 0;
-                      Navigator.of(context).popUntil((_) => count++ >= 2);
+                      popUntil = popUntil ?? 2;
+                      Navigator.of(context).popUntil((_) => count++ >= popUntil!);
                     },
                     child: UText(
                       Localizer.Get(Localizer.ok),

@@ -5,7 +5,7 @@ class Localizer
   static int index = 0;
   static const List<String> index_text = ["EN", "TR"];
   
-  static const List<String> qr_code_operations = ["Karekod İşlemleri", "QR Code Operations"];
+  static const List<String> qr_code_operations = ["Karekod İşlemleri", "QR Operations"];
   static const List<String> login = ["Giriş Yap", "Login"];
   static const List<String> notifications = ["Bildirimler", "Notifications"];
   static const List<String> credit_calculation = ["Kredi Hesaplama", "Credit Calculation"];
@@ -15,6 +15,9 @@ class Localizer
   static const List<String> change_customer = ["Müşteri değiştir", "Change customer"];
   static const List<String> welcome___with_comma = ["Hoşgeldin, ", "Welcome, "];
   static const List<String> remaining_attempts = ["Kalan deneme hakkı: ", "Remaining attempts: "];
+  static const List<String> last_transactions = ["Son İşlemlerim", "Last Transactions"];
+  static const List<String> send_money = ["Para Gönder", "Send Money"];
+  static const List<String> money_transfer = ["Para Transferi", "Money Transfer"];
   static const List<String> password_must_be_6_char_long = ["Parola 6 karakter olmalı.", "Password must be 6 characters long."];
   static const List<String> password_changed_successfully = ["Parola başarıyla değiştirildi.", "Password changed successfully"];
   static const List<String> entered_passwords_do_not_match = ["Girilen parolalar eşleşmiyor.", "The entererd passwords do not match."];
@@ -44,11 +47,17 @@ class Localizer
   static const List<String> select_a_currency = ["Döviz cinsi seç...", "Select a currency type..."];
   static const List<String> select_a_billing_day = ["Kesim günü seç...", "Select a billing day..."];
   static const List<String> select_a_card_type = ["Kart türü seç...", "Select a card type..."];
+  static const List<String> select_an_account = ["Hesap seç...", "Select an account..."];
   static const List<String> select_a_district = ["İlçe seç...", "Select a district..."];
   static const List<String> select_a_gender = ["Cinsiyet seç...", "Select a gender..."];
   static const List<String> email_is_invalid = ["Email adresi geçerli değil.", "Email address is invalid."];
+  static const List<String> date_is_invalid = ["Tarih geçerli değil.", "Date is invalid."];
   static const List<String> home = ["Ana Sayfa", "Home"];
   static const List<String> all_transactions = ["Tüm İşlemler", "All Transactions"];
+  static const List<String> account_no = ["Hesap Numarası", "Account Number"];
+  static const List<String> sender_account = ["Gönderen Hesap", "Sender Account"];
+  static const List<String> namesurname = ["Ad Soyad", "Name Surname"];
+  static const List<String> recipient = ["Alıcı", "Recipient"];
   static const List<String> phoneno_is_invalid = ["Telefon no geçerli değil.", "Phone no is invalid."];
   
   static const List<String> approve = ["Onay", "Approve"];
@@ -64,11 +73,18 @@ class Localizer
   static const List<String> card_type = ["Kart Türü", "Card Type"];
   static const List<String> billing_day = ["Kesim Günü", "Billing Day"];
   static const List<String> requested_limit = ["Talep Edilen Limit", "Requested Limit"];
+  static const List<String> amount = ["Miktar", "Amount"];
+  static const List<String> transaction_date = ["İşlem Tarihi", "Transaction Date"];
   static const List<String> account_added = ["Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.", "Account created successfully. You can see it under 'My Accounts' on the main page."];
   static const List<String> card_approved = ["Kart başvurun onaylandı. Ana sayfada 'Kartlarım' arasında görebilirsin.", "Your card application approved. You can see it under 'My Cards' on the main page."];
   static const List<String> balance = ["Bakiye", "Balance"];
+    static const List<String> send_postdated = ["İleri Tarihli Gönder", "Send Postdated"];
+    static const List<String> transaction_queued = ["İşlemin sıraya alındı.", "Your process has been queued."];
+    static const List<String> no_credit_card = ["Henüz bir kredi kartın yok. 'Tüm İşlemler' menüsünden kart başvurusunda bulunabilirsin.", 
+"You don't have a credit card yet. You can apply for one from the 'All Transactions' menu."];
   static const List<String> outstanding_balance = ["Kullanılabilir Limit", "Outstanding Balance"];
   static const List<String> customer_will_logged_out_to_change = ["Müşteri değiştirmek için güncel müşteriden çıkış yapılacaktır. Onaylıyor musun?", "To change a customer, the current customer will be logged out. Do you approve?"];
+  static const List<String> customer_will_logged_out = ["Müşteriden çıkış yapılacaktır. Onaylıyor musun?", "The current customer will be logged out. Do you approve?"];
   static const List<String> customer_will_logged_out_to_create_new = ["Yeni müşteri oluşturmak için güncel müşteriden çıkış yapılacaktır. Onaylıyor musun?", "To create a new customer, the current customer will be logged out. Do you approve?"];
   static const List<String> this_field_cannot_be_left_empty = ["Bu alan boş bırakılamaz.", "This field cannot be left empty."];
   static const List<String> identity_no_must_be_11_char_long = ["'T.C. Kimlik No' 11 karakter olmalı.", "'Identity No' must be 11 characters long."];

@@ -46,7 +46,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
-      isLogged: false,
+        isLogged: false,
         actions: [
           UTextButton(
             onPressed: () {
@@ -140,7 +140,9 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                                           UButton(
                                             onPressed: () async {
                                               await HelperMethods.DeleteData();
-                                              setState(() {});
+                                              setState(() {
+                                                Navigator.pop(context);
+                                              });
                                             },
                                             redButton: true,
                                             child: UText(
@@ -286,6 +288,49 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                       )
                     ],
                   )),
+              UTextButton(
+                  onPressed: () async {
+                    if (await HelperMethods.GetFullName() != "") {
+                      HelperMethods.SetBottomSheet(
+                          context,
+                          Localizer.Get(
+                              Localizer.customer_will_logged_out_to_create_new),
+                          UAsset.LOGOUT,
+                          Localizer.Get(Localizer.approve),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              UButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: UText(
+                                    Localizer.Get(Localizer.nevermind),
+                                    color: UColor.WhiteColor,
+                                  )),
+                              Gap(USize.Width / 33),
+                              UButton(
+                                onPressed: () async {
+                                  HelperMethods.DeleteData();
+                                  await setNewCustomerValues();
+                                },
+                                redButton: true,
+                                child: UText(
+                                  Localizer.Get(Localizer.log_out),
+                                  color: UColor.WhiteColor,
+                                ),
+                              ),
+                            ],
+                          ));
+                    } else {
+                      await setNewCustomerValues();
+                    }
+                  },
+                  child: UText(
+                    Localizer.Get(Localizer.i_want_to_be_a_customer),
+                    color: UColor.PrimaryColor,
+                  )),
               Gap(USize.Height / 16),
               Stack(
                 alignment: Alignment.center,
@@ -379,50 +424,6 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                   ),
                 ],
               ),
-              Gap(USize.Height / 16),
-              UTextButton(
-                  onPressed: () async {
-                    if (await HelperMethods.GetFullName() != "") {
-                      HelperMethods.SetBottomSheet(
-                          context,
-                          Localizer.Get(
-                              Localizer.customer_will_logged_out_to_create_new),
-                          UAsset.LOGOUT,
-                          Localizer.Get(Localizer.approve),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              UButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: UText(
-                                    Localizer.Get(Localizer.nevermind),
-                                    color: UColor.WhiteColor,
-                                  )),
-                              Gap(USize.Width / 33),
-                              UButton(
-                                onPressed: () async {
-                                  HelperMethods.DeleteData();
-                                  await setNewCustomerValues();
-                                },
-                                redButton: true,
-                                child: UText(
-                                  Localizer.Get(Localizer.log_out),
-                                  color: UColor.WhiteColor,
-                                ),
-                              ),
-                            ],
-                          ));
-                    } else {
-                      await setNewCustomerValues();
-                    }
-                  },
-                  child: UText(
-                    Localizer.Get(Localizer.i_want_to_be_a_customer),
-                    color: UColor.PrimaryColor,
-                  ))
             ],
           ),
         ));
@@ -431,36 +432,20 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
   setNewCustomerValues() async {
     HelperMethods.SetLoadingScreen(context);
 
+    List parList = [
+      DTOParameter(GroupCode: "City"),
+      DTOParameter(GroupCode: "District"),
+      DTOParameter(GroupCode: "Gender"),
+      DTOParameter(GroupCode: "Profession")
+    ];
     List cityList;
     List districtList;
     List professionList;
     List genderList;
 
     try {
-      cityList = await UProxy.Get(
-          IService.GET_PARAMETERS_BY_GROUP_CODE,
-          MessageContainer.builder(
-              {"Parameter": DTOParameter(GroupCode: "City")})).then((value) {
-        return value.GetWithKey("ParameterList");
-      });
-      districtList = await UProxy.Get(
-              IService.GET_PARAMETERS_BY_GROUP_CODE,
-              MessageContainer.builder(
-                  {"Parameter": DTOParameter(GroupCode: "District")}))
-          .then((value) {
-        return value.GetWithKey("ParameterList");
-      });
-      professionList = await UProxy.Get(
-              IService.GET_PARAMETERS_BY_GROUP_CODE,
-              MessageContainer.builder(
-                  {"Parameter": DTOParameter(GroupCode: "Profession")}))
-          .then((value) {
-        return value.GetWithKey("ParameterList");
-      });
-      genderList = await UProxy.Get(
-          IService.GET_PARAMETERS_BY_GROUP_CODE,
-          MessageContainer.builder(
-              {"Parameter": DTOParameter(GroupCode: "Gender")})).then((value) {
+      parList = await UProxy.Get(IService.GET_MULTIPLE_GROUP_CODE,
+          MessageContainer.builder({"ParameterList": parList})).then((value) {
         return value.GetWithKey("ParameterList");
       });
     } catch (e) {
@@ -468,18 +453,16 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
       HelperMethods.ApiException(context, e.toString());
       return;
     }
-    for (var i = 0; i < cityList.length; i++) {
-      cityList[i] = DTOParameter.fromJson(cityList[i]);
+
+    for (var i = 0; i < parList.length; i++) {
+      parList[i] = DTOParameter.fromJson(parList[i]);
     }
-    for (var i = 0; i < districtList.length; i++) {
-      districtList[i] = DTOParameter.fromJson(districtList[i]);
-    }
-    for (var i = 0; i < professionList.length; i++) {
-      professionList[i] = DTOParameter.fromJson(professionList[i]);
-    }
-    for (var i = 0; i < genderList.length; i++) {
-      genderList[i] = DTOParameter.fromJson(genderList[i]);
-    }
+
+    cityList = parList.where((x) => x.GroupCode == "City").toList();
+    districtList = parList.where((x) => x.GroupCode == "District").toList();
+    professionList = parList.where((x) => x.GroupCode == "Profession").toList();
+    genderList = parList.where((x) => x.GroupCode == "Gender").toList();
+
     Navigator.pop(context);
     Navigator.push(
         context,

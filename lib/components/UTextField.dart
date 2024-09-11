@@ -59,8 +59,9 @@ class UTextField extends StatelessWidget {
             isDense: true,
             fillColor: errorText != null ? UColor.RedLightColor : fillColor,
             hintText: hintText,
+            alignLabelWithHint: true,
             hintStyle:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, ),
             prefixIcon: Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width * 0.05),
               child: prefixIcon,

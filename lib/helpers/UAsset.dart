@@ -7,5 +7,6 @@ class UAsset
   static String LOGO = "lib/assets/logo-gif.gif";
   static String CHECK = "lib/assets/check.gif";
   static String NETWORK_ERROR = "lib/assets/network-error.gif";
+  static String NOT_FOUND = "lib/assets/not-found.gif";
   static String LOGOUT = "lib/assets/logout.gif";
 }

@@ -51,11 +51,11 @@ class _UButtonState extends State<UButton> {
             onPressed: widget.onPressed,
             style: ButtonStyle(
                 splashFactory: NoSplash.splashFactory,
-                elevation: const MaterialStatePropertyAll(8),
-                shape: const MaterialStatePropertyAll(RoundedRectangleBorder(
+                elevation: const WidgetStatePropertyAll(8),
+                shape: const WidgetStatePropertyAll(RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(11.25)))),
-                backgroundColor: widget.redButton == null ? const MaterialStatePropertyAll(UColor.PrimaryColor) : const MaterialStatePropertyAll(UColor.RedColor),
-                shadowColor: const MaterialStatePropertyAll(UColor.SecondColor)),
+                backgroundColor: widget.redButton == null ? const WidgetStatePropertyAll(UColor.PrimaryColor) : const WidgetStatePropertyAll(UColor.RedColor),
+                shadowColor: const WidgetStatePropertyAll(UColor.SecondColor)),
             child: widget.child),
       ),
     );
