@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
+import 'package:parbank/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
@@ -342,7 +343,9 @@ class _HOMESCRNState extends State<HOMESCRN> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TRACTHST(Transactions: List.empty())));
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
