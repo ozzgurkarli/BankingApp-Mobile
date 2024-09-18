@@ -1,7 +1,9 @@
 // ignore_for_file: non_constant_identifier_names, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UIcon.dart';
 import 'package:parbank/components/ULabel.dart';
 import 'package:parbank/components/UScaffold.dart';
@@ -28,38 +30,58 @@ class _TRACTHSTState extends State<TRACTHST> {
       body: Center(
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ULabel(
-                  label: "${Localizer.Get(Localizer.transaction_date)}:",
-                  child: UTextField(
-                    width: USize.Width * 0.4,
-                    inputFormatters: [
-                      MaskTextInputFormatter(mask: "##/##/####")
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //   children: [
+            //     ULabel(
+            //       label: "${Localizer.Get(Localizer.transaction_date)}:",
+            //       child: UTextField(
+            //         width: USize.Width * 0.4,
+            //         inputFormatters: [
+            //           MaskTextInputFormatter(mask: "##/##/####")
+            //         ],
+            //         controller: minDateController,
+            //         hintText: Localizer.Get(Localizer.transaction_date),
+            //         fillColor: UColor.WhiteHeavyColor,
+            //         prefixIcon: const Icon(Icons.date_range),
+            //         prefixColor: UColor.PrimaryColor,
+            //       ),
+            //     ),
+            //     ULabel(
+            //       label: "${Localizer.Get(Localizer.transaction_date)}:",
+            //       child: UTextField(
+            //         width: USize.Width * 0.4,
+            //         inputFormatters: [
+            //           MaskTextInputFormatter(mask: "##/##/####")
+            //         ],
+            //         controller: minDateController,
+            //         hintText: Localizer.Get(Localizer.transaction_date),
+            //         fillColor: UColor.WhiteHeavyColor,
+            //         prefixIcon: const Icon(Icons.date_range),
+            //         prefixColor: UColor.PrimaryColor,
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            Gap(USize.Height/100),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: USize.Width/10),
+              child: UButton(
+                onPressed: () {},
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      UText(
+                        "Filtrele",
+                        color: UColor.WhiteColor,
+                      ),
+                      UIcon(
+                        Icons.filter_alt_outlined,
+                        color: UColor.WhiteColor,
+                      )
                     ],
-                    controller: minDateController,
-                    hintText: Localizer.Get(Localizer.transaction_date),
-                    fillColor: UColor.WhiteHeavyColor,
-                    prefixIcon: const Icon(Icons.date_range),
-                    prefixColor: UColor.PrimaryColor,
                   ),
-                ),
-                ULabel(
-                  label: "${Localizer.Get(Localizer.transaction_date)}:",
-                  child: UTextField(
-                    width: USize.Width * 0.4,
-                    inputFormatters: [
-                      MaskTextInputFormatter(mask: "##/##/####")
-                    ],
-                    controller: minDateController,
-                    hintText: Localizer.Get(Localizer.transaction_date),
-                    fillColor: UColor.WhiteHeavyColor,
-                    prefixIcon: const Icon(Icons.date_range),
-                    prefixColor: UColor.PrimaryColor,
-                  ),
-                ),
-              ],
+              ),
             ),
             SizedBox(
                 width: USize.Width,
