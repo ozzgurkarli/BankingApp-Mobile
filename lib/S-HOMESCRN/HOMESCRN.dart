@@ -343,7 +343,8 @@ class _HOMESCRNState extends State<HOMESCRN> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
-                  onPressed: () {
+                  onPressed: ()async {
+                    UProxy.Get(IService.CARD_APPLICATION, MessageContainer.builder({}));
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> TRACTHST(Transactions: List.empty())));
                   },
                   child: Row(
