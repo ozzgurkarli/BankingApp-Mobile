@@ -17,6 +17,7 @@ import 'package:parbank/components/UText.dart';
 import 'package:parbank/dto/DTOAccount.dart';
 import 'package:parbank/dto/DTOCreditCard.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
+import 'package:parbank/dto/DTOTransactionHistory.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
@@ -344,7 +345,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
                   onPressed: ()async {
-                    UProxy.Get(IService.CARD_APPLICATION, MessageContainer.builder({}));
+                    UProxy.Get(IService.GET_TRANSACTION_HISTORY, MessageContainer.builder({"DTOTransactionHistory": DTOTransactionHistory(MinDate: DateTime.now().add(const Duration(days: -7)))}));
                     Navigator.push(context, MaterialPageRoute(builder: (context)=> TRACTHST(Transactions: List.empty())));
                   },
                   child: Row(

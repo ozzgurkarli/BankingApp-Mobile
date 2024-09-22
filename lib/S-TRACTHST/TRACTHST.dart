@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UIcon.dart';
+import 'package:parbank/components/UIconButton.dart';
 import 'package:parbank/components/ULabel.dart';
 import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/UText.dart';
@@ -27,6 +28,15 @@ class _TRACTHSTState extends State<TRACTHST> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      leading: UIconButton(
+        icon: UIcon(
+          Icons.arrow_circle_left_outlined,
+          color: UColor.WhiteHeavyColor,
+        ),
+        onPressed: () {
+          Navigator.pop(context);
+        },
+      ),
       body: Center(
         child: Column(
           children: [
