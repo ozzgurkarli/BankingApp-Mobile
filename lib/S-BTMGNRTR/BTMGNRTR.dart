@@ -8,6 +8,7 @@ import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
 import 'package:parbank/S-LGNIDNTY/LGNIDNTY.dart';
 import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
 import 'package:parbank/S-OPENACCT/OPENACCT.dart';
+import 'package:parbank/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
@@ -15,6 +16,7 @@ import 'package:parbank/components/UText.dart';
 import 'package:parbank/dto/DTOAccount.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
 import 'package:parbank/dto/DTOParameter.dart';
+import 'package:parbank/dto/DTOTransactionHistory.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
@@ -157,7 +159,38 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                             )));
               }
             ],
-            [Localizer.Get(Localizer.last_transactions), () {}],
+            [Localizer.Get(Localizer.last_transactions), () async{
+              HelperMethods.SetLoadingScreen(context);
+                    List transactionList;
+
+                    try {
+                      transactionList = await UProxy.Get(
+                          IService.GET_TRANSACTION_HISTORY,
+                          MessageContainer.builder({
+                            "DTOTransactionHistory": DTOTransactionHistory(
+                                CustomerNo: widget.customer.CustomerNo,
+                                Count: 10,
+                                MinDate: DateTime.now()
+                                    .add(const Duration(days: -7)))
+                          })).then((value) {
+                        return value.GetWithKey("TransactionList");
+                      });
+                    } catch (e) {
+                      Navigator.pop(context);
+                      HelperMethods.ApiException(context, e.toString(),
+                          popUntil: 1);
+                      return;
+                    }
+                    for (var i = 0; i < transactionList.length; i++) {
+                      transactionList[i] = DTOTransactionHistory.fromJson(transactionList[i]);
+                    }
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TRACTHST(Transactions: transactionList, customer: widget.customer,)));
+            }],
             [Localizer.Get(Localizer.market_information), () {}],
             [Localizer.Get(Localizer.qr_code_operations), () {}],
             [Localizer.Get(Localizer.credit_calculation), () {}],

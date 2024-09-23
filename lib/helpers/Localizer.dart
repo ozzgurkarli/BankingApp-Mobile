@@ -59,6 +59,7 @@ class Localizer
   static const List<String> namesurname = ["Ad Soyad", "Name Surname"];
   static const List<String> recipient = ["Alıcı", "Recipient"];
   static const List<String> phoneno_is_invalid = ["Telefon no geçerli değil.", "Phone no is invalid."];
+  static const List<String> view_all_transactions = ["Tüm İşlemleri Görüntüle", "View All Transactions"];
   
   static const List<String> approve = ["Onay", "Approve"];
   static const List<String> nevermind = ["Vazgeç", "Nevermind"];
@@ -75,6 +76,8 @@ class Localizer
   static const List<String> requested_limit = ["Talep Edilen Limit", "Requested Limit"];
   static const List<String> amount = ["Miktar", "Amount"];
   static const List<String> transaction_date = ["İşlem Tarihi", "Transaction Date"];
+  static const List<String> incoming = ["Gelen", "Incoming"];
+  static const List<String> outgoing = ["Giden", "Outgoing"];
   static const List<String> account_added = ["Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.", "Account created successfully. You can see it under 'My Accounts' on the main page."];
   static const List<String> card_approved = ["Kart başvurun onaylandı. Ana sayfada 'Kartlarım' arasında görebilirsin.", "Your card application approved. You can see it under 'My Cards' on the main page."];
   static const List<String> balance = ["Bakiye", "Balance"];

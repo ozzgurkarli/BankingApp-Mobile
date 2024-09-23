@@ -43,12 +43,12 @@ class HelperMethods {
     return iban;
   }
 
-  static String toExpirationDate(DateTime expirationDate){
+  static String toExpirationDate(DateTime expirationDate) {
     return "${expirationDate.month}/${expirationDate.year.toString().substring(2)}";
   }
 
   static String cardNoWithSpaces(String cardNo) {
-    return "${cardNo.substring(0,4)} ${cardNo.substring(4,8)} ${cardNo.substring(8,12)} ${cardNo.substring(12)}";
+    return "${cardNo.substring(0, 4)} ${cardNo.substring(4, 8)} ${cardNo.substring(8, 12)} ${cardNo.substring(12)}";
   }
 
   static InsertData(String fullName, String identityNo) async {
@@ -80,6 +80,19 @@ class HelperMethods {
     var sp = await SharedPreferences.getInstance();
 
     return sp.getString("FullName") ?? "";
+  }
+
+  static RemoveZeros(String number) {
+    while (number.characters.last == '0'){
+      number = number.substring(0, number.length - 1);
+
+      if (number.characters.last == '.') {
+        number = number.substring(0, number.length - 1);
+        break;
+      }
+    }
+    
+    return number;
   }
 
   static SetSnackBar(BuildContext context, String text) {
@@ -181,7 +194,8 @@ class HelperMethods {
                     onPressed: () {
                       int count = 0;
                       popUntil = popUntil ?? 2;
-                      Navigator.of(context).popUntil((_) => count++ >= popUntil!);
+                      Navigator.of(context)
+                          .popUntil((_) => count++ >= popUntil!);
                     },
                     child: UText(
                       Localizer.Get(Localizer.ok),
