@@ -12,6 +12,7 @@ class DTOTransactionHistory {
   DateTime? TransactionDate;
   DateTime? MaxDate;
   DateTime? MinDate;
+  int? Count;
 
   DTOTransactionHistory(
       {this.Id,
@@ -24,7 +25,8 @@ class DTOTransactionHistory {
       this.Description,
       this.MaxDate,
       this.MinDate,
-      this.TransactionDate});
+      this.TransactionDate,
+      this.Count});
 
   factory DTOTransactionHistory.fromJson(Map<dynamic, dynamic> json) {
     return DTOTransactionHistory(
@@ -36,9 +38,10 @@ class DTOTransactionHistory {
       Currency: json['currency'] as String?,
       TransactionType: json['transactionType'] as int?,
       TransactionDate: DateTime.parse(json['transactionDate']) as DateTime?,
-      MinDate: DateTime.parse(json['minDate']) as DateTime?,
-      MaxDate: DateTime.parse(json['maxDate']) as DateTime?,
+      MinDate: DateTime.parse(json['minDate'] ?? DateTime(1).toIso8601String()) as DateTime?,
+      MaxDate: DateTime.parse(json['maxDate']?? DateTime(1).toIso8601String()) as DateTime?,
       Description: json['description'] as String?,
+      Count: json['count'] as int?,
     );
   }
 
@@ -56,6 +59,7 @@ class DTOTransactionHistory {
       'TransactionDate': (TransactionDate ?? DateTime(1)).toIso8601String(),
       'MinDate': MinDate!.toIso8601String(),
       'MaxDate': (MaxDate ?? DateTime(1)).toIso8601String(),
+      'Count': Count
     };
   }
 }

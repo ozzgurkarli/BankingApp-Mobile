@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -190,7 +190,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         if (cardList.isEmpty) {
                           return Center(
                             child: GestureDetector(
-                              onTap: (){HelperMethods.SetSnackBar(context, Localizer.Get(Localizer.no_credit_card));},
+                              onTap: () {
+                                HelperMethods.SetSnackBar(context,
+                                    Localizer.Get(Localizer.no_credit_card));
+                              },
                               child: HelperMethods.ShowAsset(
                                 UAsset.NOT_FOUND,
                                 height: USize.Height / 8,
@@ -314,7 +317,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
                   onPressed: () {
-                    if(!isAccountsAvailable){
+                    if (!isAccountsAvailable) {
                       return;
                     }
                     Navigator.push(
@@ -344,9 +347,37 @@ class _HOMESCRNState extends State<HOMESCRN> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 5),
               child: UButton(
-                  onPressed: ()async {
-                    UProxy.Get(IService.GET_TRANSACTION_HISTORY, MessageContainer.builder({"DTOTransactionHistory": DTOTransactionHistory(MinDate: DateTime.now().add(const Duration(days: -7)))}));
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> TRACTHST(Transactions: List.empty())));
+                  onPressed: () async {
+                    HelperMethods.SetLoadingScreen(context);
+                    List transactionList;
+
+                    try {
+                      transactionList = await UProxy.Get(
+                          IService.GET_TRANSACTION_HISTORY,
+                          MessageContainer.builder({
+                            "DTOTransactionHistory": DTOTransactionHistory(
+                                CustomerNo: widget.customer.CustomerNo,
+                                Count: 10,
+                                MinDate: DateTime.now()
+                                    .add(const Duration(days: -7)))
+                          })).then((value) {
+                        return value.GetWithKey("TransactionList");
+                      });
+                    } catch (e) {
+                      Navigator.pop(context);
+                      HelperMethods.ApiException(context, e.toString(),
+                          popUntil: 1);
+                      return;
+                    }
+                    for (var i = 0; i < transactionList.length; i++) {
+                      transactionList[i] = DTOTransactionHistory.fromJson(transactionList[i]);
+                    }
+                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                TRACTHST(Transactions: transactionList, customer: widget.customer,)));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
