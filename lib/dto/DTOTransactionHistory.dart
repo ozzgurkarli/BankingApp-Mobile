@@ -6,6 +6,8 @@ class DTOTransactionHistory {
   String? AccountNo;
   String? CreditCardNo;
   double? Amount;
+  double? MinAmount;
+  double? MaxAmount;
   String? Currency;
   String? Description;
   int? TransactionType;
@@ -23,6 +25,8 @@ class DTOTransactionHistory {
       this.Currency,
       this.TransactionType,
       this.Description,
+      this.MinAmount,
+      this.MaxAmount,
       this.MaxDate,
       this.MinDate,
       this.TransactionDate,

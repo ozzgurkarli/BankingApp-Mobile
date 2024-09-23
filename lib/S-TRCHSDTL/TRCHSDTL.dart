@@ -3,11 +3,13 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:parbank/S-TRCHSFLT/TRCHSFLT.dart';
 import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UIcon.dart';
 import 'package:parbank/components/UIconButton.dart';
 import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/UText.dart';
+import 'package:parbank/dto/DTOTransactionHistory.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
 import 'package:parbank/helpers/UColor.dart';
@@ -22,6 +24,15 @@ class TRCHSDTL extends StatefulWidget {
 }
 
 class _TRCHSDTLState extends State<TRCHSDTL> {
+  List FilteredTransactions = [];
+
+  @override
+  void initState() {
+    FilteredTransactions = widget.Transactions;
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return UScaffold(
@@ -42,7 +53,37 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 10),
               child: UButton(
-                onPressed: () {},
+                onPressed: () async {
+                  DTOTransactionHistory filter = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const TRCHSFLT()));
+
+                  setState(() {
+                    if (filter.MinDate != null &&
+                        filter.MinDate!.isAfter(DateTime(1))) {
+                      FilteredTransactions.where(
+                          (x) => !x.TransactionDate!.isBefore(filter.MinDate));
+                    }
+                    if (filter.MaxDate != null &&
+                        filter.MaxDate!.isAfter(DateTime(1))) {
+                      FilteredTransactions.where(
+                          (x) => !x.TransactionDate!.isAfter(filter.MaxDate));
+                    }
+                    if (filter.TransactionType != null) {
+                      FilteredTransactions.where(
+                          (x) => x.TransactionType == filter.TransactionType);
+                    }
+                    if (filter.MinAmount != null && filter.MinAmount! > 0) {
+                      FilteredTransactions.where(
+                          (x) => x.Amount >= filter.MinAmount);
+                    }
+                    if (filter.MaxAmount != null && filter.MaxAmount! > 0) {
+                      FilteredTransactions.where(
+                          (x) => x.Amount <= filter.MaxAmount);
+                    }
+                  });
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

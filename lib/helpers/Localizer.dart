@@ -46,6 +46,7 @@ class Localizer
   static const List<String> select_a_city = ["İl seç...", "Select a city..."];
   static const List<String> select_a_currency = ["Döviz cinsi seç...", "Select a currency type..."];
   static const List<String> select_a_billing_day = ["Kesim günü seç...", "Select a billing day..."];
+  static const List<String> select_a_date = ["Tarih seç...", "Select a date..."];
   static const List<String> select_a_card_type = ["Kart türü seç...", "Select a card type..."];
   static const List<String> select_an_account = ["Hesap seç...", "Select an account..."];
   static const List<String> select_a_district = ["İlçe seç...", "Select a district..."];
@@ -64,6 +65,8 @@ class Localizer
   static const List<String> approve = ["Onay", "Approve"];
   static const List<String> nevermind = ["Vazgeç", "Nevermind"];
   static const List<String> my_accounts = ["Hesaplarım", "My Accounts"];
+  static const List<String> clear = ["Temizle", "Clear"];
+  static const List<String> filter = ["Filtrele", "Filter"];
   static const List<String> my_cards = ["Kartlarım", "My Cards"];
   static const List<String> settings = ["Ayarlar", "Settings"];
   static const List<String> log_out = ["Çıkış yap", "Log out"];
@@ -75,7 +78,11 @@ class Localizer
   static const List<String> billing_day = ["Kesim Günü", "Billing Day"];
   static const List<String> requested_limit = ["Talep Edilen Limit", "Requested Limit"];
   static const List<String> amount = ["Miktar", "Amount"];
+  static const List<String> lowest_amount = ["En Düşük Miktar", "Lowest Amount"];
+  static const List<String> highest_amount = ["En Yüksek Miktar", "Highest Amount"];
   static const List<String> transaction_date = ["İşlem Tarihi", "Transaction Date"];
+  static const List<String> start_date = ["Başlangıç Tarihi", "Start Date"];
+  static const List<String> end_date = ["Bitiş Tarihi", "End Date"];
   static const List<String> incoming = ["Gelen", "Incoming"];
   static const List<String> outgoing = ["Giden", "Outgoing"];
   static const List<String> account_added = ["Hesap başarıyla oluşturuldu. Ana sayfada 'Hesaplarım' arasında görebilirsin.", "Account created successfully. You can see it under 'My Accounts' on the main page."];

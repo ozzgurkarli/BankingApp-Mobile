@@ -218,7 +218,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                   });
                 },
                 controller: dateController,
-                hintText: Localizer.Get(Localizer.transaction_date),
+                hintText: Localizer.Get(Localizer.select_a_date),
                 fillColor: UColor.WhiteHeavyColor,
                 errorText: dateError,
                 prefixIcon: const Icon(Icons.date_range),
