@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:parbank/S-SPLSHSCR/SPLSHSCR.dart';
+import 'package:parbank/api/IService.dart';
+import 'package:parbank/api/UProxy.dart';
+import 'package:parbank/dto/MessageContainer.dart';
 import 'package:parbank/helpers/USize.dart';
 
 void main() {
@@ -14,6 +17,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     USize.Height = MediaQuery.of(context).size.height - kToolbarHeight;
     USize.Width = MediaQuery.of(context).size.width;
+
+    UProxy.Get(IService.TRIGGER_SCHEDULES, MessageContainer());
+
     return MaterialApp(
       theme: ThemeData(
         pageTransitionsTheme: const PageTransitionsTheme(

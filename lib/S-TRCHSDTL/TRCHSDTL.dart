@@ -88,7 +88,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     UText(
-                      "Filtrele",
+                      Localizer.Get(Localizer.filter),
                       color: UColor.WhiteColor,
                     ),
                     UIcon(
@@ -135,7 +135,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                               ],
                             ),
                             UText(
-                                "${HelperMethods.RemoveZeros(widget.Transactions[index].Amount.abs().toString())} ${widget.Transactions[index].Currency}"),
+                                "${HelperMethods.RemoveZerosAndFormat(widget.Transactions[index].Amount.abs())} ${widget.Transactions[index].Currency}"),
                             UIcon(Icons.keyboard_arrow_right_outlined)
                           ],
                         ),

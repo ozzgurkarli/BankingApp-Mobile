@@ -82,17 +82,20 @@ class HelperMethods {
     return sp.getString("FullName") ?? "";
   }
 
-  static RemoveZeros(String number) {
-    while (number.characters.last == '0'){
-      number = number.substring(0, number.length - 1);
+  static RemoveZerosAndFormat(double number) {
+    
+    NumberFormat formatter = NumberFormat('#,##0.00', 'en_US');
+    String num = formatter.format(number);
 
-      if (number.characters.last == '.') {
-        number = number.substring(0, number.length - 1);
+    while (num.characters.last == '0'){
+      num = num.substring(0, num.length - 1);
+
+      if (num.characters.last == '.') {
+        num = num.substring(0, num.length - 1);
         break;
       }
     }
-    
-    return number;
+    return num;
   }
 
   static SetSnackBar(BuildContext context, String text) {
