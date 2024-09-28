@@ -5,8 +5,9 @@ class DTOLogin{
   String? IdentityNo;
   int? Password;
   bool? Temporary;
+  String? Token;
 
-  DTOLogin({this.Id, this.IdentityNo, this.Password, this.Temporary});
+  DTOLogin({this.Id, this.IdentityNo, this.Password, this.Temporary, this.Token});
 
   factory DTOLogin.fromJson(Map<dynamic, dynamic> json) {
     return DTOLogin(
@@ -14,6 +15,7 @@ class DTOLogin{
       IdentityNo: json['identityNo'] as String?,
       Password: json['password'] as int?,
       Temporary: json['temporary'] as bool?,
+      Token: json['token'] as String?,
     );
   }
 

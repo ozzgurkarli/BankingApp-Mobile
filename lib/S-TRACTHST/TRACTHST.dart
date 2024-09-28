@@ -110,7 +110,7 @@ class _TRACTHSTState extends State<TRACTHST> {
                                 UText(DateFormat('dd/MM/yyyy').format(widget.Transactions[index].TransactionDate), fontSize: 14, color: UColor.BarrierColor,)
                               ],
                             ),
-                            UText("${HelperMethods.RemoveZeros(widget.Transactions[index].Amount.abs().toString())} ${widget.Transactions[index].Currency}"),
+                            UText("${HelperMethods.RemoveZerosAndFormat(widget.Transactions[index].Amount.abs())} ${widget.Transactions[index].Currency}"),
                             UIcon(Icons.keyboard_arrow_right_outlined)
                           ],
                         ),

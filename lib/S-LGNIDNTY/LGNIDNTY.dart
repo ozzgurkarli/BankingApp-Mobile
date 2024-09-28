@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parbank/S-LGNPSWRD/LGNPSWRD.dart';
 import 'package:parbank/S-REGISTERF/REGISTERF.dart';
+import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
@@ -248,6 +249,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                           null) {
                         DTOLogin dtoLogin = response.GetWithKey(
                             "BankingApp.Common.DataTransferObjects.DTOLogin");
+                        ENV.Token = dtoLogin.Token;
                         Navigator.push(
                             context,
                             MaterialPageRoute(
