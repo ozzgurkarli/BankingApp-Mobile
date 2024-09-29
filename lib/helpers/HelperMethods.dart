@@ -178,21 +178,25 @@ class HelperMethods {
           child: Center(
             child: Column(
               children: [
-                Gap(USize.Height / 44),
+                Gap(USize.Height / 55),
                 UText(
                   Localizer.Get(Localizer.error),
                   fontWeight: FontWeight.w500,
                   fontSize: 28,
                 ),
-                Gap(USize.Height / 25),
+                Gap(USize.Height / 33),
                 HelperMethods.ShowAsset(
                   UAsset.NETWORK_ERROR,
                   height: USize.Height / 8,
                   width: USize.Height / 8,
                 ),
-                Gap(USize.Height / 44),
-                UText(Localizer.Get(Localizer.error_database) + exception),
-                Gap(USize.Height / 17),
+                Gap(USize.Height / 55),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: UText(Localizer.Get(Localizer.error_database) + exception),
+                  ),
+                ),
+                Gap(USize.Height / 100),
                 UButton(
                     onPressed: () {
                       int count = 0;
@@ -203,7 +207,8 @@ class HelperMethods {
                     child: UText(
                       Localizer.Get(Localizer.ok),
                       color: UColor.WhiteColor,
-                    ))
+                    )),
+                Gap(USize.Height / 50),
               ],
             ),
           ),
