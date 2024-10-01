@@ -193,7 +193,6 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
                 return DTOCustomer.fromJson(value.GetWithKey("DTOCustomer"));
               });
             } catch (e) {
-              Navigator.pop(context);
               HelperMethods.ApiException(context, e.toString());
               return;
             }

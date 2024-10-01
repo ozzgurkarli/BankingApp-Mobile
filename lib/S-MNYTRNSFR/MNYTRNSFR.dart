@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, use_build_context_synchronously
 
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'package:parbank/components/ULabel.dart';
 import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/USegmentedButton.dart';
 import 'package:parbank/components/UText.dart';
+import 'package:parbank/components/UTextButton.dart';
 import 'package:parbank/components/UTextField.dart';
 import 'package:parbank/dto/DTOAccount.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
@@ -113,6 +114,15 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
             Gap(USize.Height / 25),
             ULabel(
                 label: "${Localizer.Get(Localizer.recipient)}:",
+                tailWidget: UTextButton(
+                  child: UText(
+                    "Kayıtlı Alıcılar",
+                    fontSize: 14,
+                    color: UColor.PrimaryColor,
+                  ),
+                  onPressed: () {
+                  },
+                ),
                 child: USegmentedButton(
                     segments: [
                       ButtonSegment(
@@ -143,6 +153,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                   recipientError = null;
                 });
               },
+              fontSize: segmentSelected.first == "0" ? 11.5 : 16,
               controller: recipientController,
               inputFormatters: segmentSelected.first == "0"
                   ? [
@@ -192,7 +203,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                 ],
                 onTap: () {
                   setState(() {
-                    if(amountController.text == "0.00"){
+                    if (amountController.text == "0.00") {
                       amountController.text = " ";
                     }
                     amountError = null;
@@ -240,14 +251,13 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                           dateValue = value;
                         });
                       }),
-                  UText(Localizer.Get(
-                          Localizer.send_postdated))
+                  UText(Localizer.Get(Localizer.send_postdated))
                 ],
               ),
             ),
             Gap(USize.Height / 25),
             UButton(
-                onPressed: () async{
+                onPressed: () async {
                   if (selectedAccount == null) {
                     setState(() {
                       senderAccountError = Localizer.Get(

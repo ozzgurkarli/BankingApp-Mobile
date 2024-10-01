@@ -63,9 +63,7 @@ class _TRACTHSTState extends State<TRACTHST> {
                         return value.GetWithKey("TransactionList");
                       });
                     } catch (e) {
-                      Navigator.pop(context);
-                      HelperMethods.ApiException(context, e.toString(),
-                          popUntil: 1);
+                      HelperMethods.ApiException(context, e.toString());
                       return;
                     }
                     for (var i = 0; i < transactionList.length; i++) {

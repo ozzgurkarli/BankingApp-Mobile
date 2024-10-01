@@ -7,6 +7,7 @@ import 'package:parbank/S-CRDAPPLC/CRDAPPLC.dart';
 import 'package:parbank/S-HOMESCRN/HOMESCRN.dart';
 import 'package:parbank/S-LGNIDNTY/LGNIDNTY.dart';
 import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
+import 'package:parbank/S-MRKTINFO/MRKTINFO.dart';
 import 'package:parbank/S-OPENACCT/OPENACCT.dart';
 import 'package:parbank/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
@@ -63,7 +64,6 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     return value.GetWithKey("ParameterList");
                   });
                 } catch (e) {
-                  Navigator.pop(context);
                   HelperMethods.ApiException(context, e.toString());
                   return;
                 }
@@ -104,7 +104,6 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     return value.GetWithKey("ParameterList");
                   });
                 } catch (e) {
-                  Navigator.pop(context);
                   HelperMethods.ApiException(context, e.toString());
                   return;
                 }
@@ -138,7 +137,6 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     return value.GetWithKey("AccountList");
                   });
                 } catch (e) {
-                  Navigator.pop(context);
                   HelperMethods.ApiException(context, e.toString());
                   return;
                 }
@@ -159,39 +157,76 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                             )));
               }
             ],
-            [Localizer.Get(Localizer.last_transactions), () async{
-              HelperMethods.SetLoadingScreen(context);
-                    List transactionList;
+            [
+              Localizer.Get(Localizer.last_transactions),
+              () async {
+                HelperMethods.SetLoadingScreen(context);
+                List transactionList;
 
-                    try {
-                      transactionList = await UProxy.Get(
-                          IService.GET_TRANSACTION_HISTORY,
-                          MessageContainer.builder({
-                            "DTOTransactionHistory": DTOTransactionHistory(
-                                CustomerNo: widget.customer.CustomerNo,
-                                Count: 10,
-                                MinDate: DateTime.now()
-                                    .add(const Duration(days: -7)))
-                          })).then((value) {
-                        return value.GetWithKey("TransactionList");
-                      });
-                    } catch (e) {
-                      Navigator.pop(context);
-                      HelperMethods.ApiException(context, e.toString(),
-                          popUntil: 1);
-                      return;
-                    }
-                    for (var i = 0; i < transactionList.length; i++) {
-                      transactionList[i] = DTOTransactionHistory.fromJson(transactionList[i]);
-                    }
-                    Navigator.pop(context);
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                TRACTHST(Transactions: transactionList, customer: widget.customer,)));
-            }],
-            [Localizer.Get(Localizer.market_information), () {}],
+                try {
+                  transactionList = await UProxy.Get(
+                      IService.GET_TRANSACTION_HISTORY,
+                      MessageContainer.builder({
+                        "DTOTransactionHistory": DTOTransactionHistory(
+                            CustomerNo: widget.customer.CustomerNo,
+                            Count: 10,
+                            MinDate:
+                                DateTime.now().add(const Duration(days: -7)))
+                      })).then((value) {
+                    return value.GetWithKey("TransactionList");
+                  });
+                } catch (e) {
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+                for (var i = 0; i < transactionList.length; i++) {
+                  transactionList[i] =
+                      DTOTransactionHistory.fromJson(transactionList[i]);
+                }
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TRACTHST(
+                              Transactions: transactionList,
+                              customer: widget.customer,
+                            )));
+              }
+            ],
+            [
+              Localizer.Get(Localizer.market_information),
+              () async {
+                HelperMethods.SetLoadingScreen(context);
+                List currencyList;
+
+                try {
+                  currencyList = await UProxy.Get(
+                      IService.GET_PARAMETERS_BY_GROUP_CODE,
+                      MessageContainer.builder({
+                        "Parameter": DTOParameter(GroupCode: "Currency")
+                      })).then((value) {
+                    return value.GetWithKey("ParameterList");
+                  });
+                } catch (e) {
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+                for (var i = 0; i < currencyList.length; i++) {
+                  currencyList[i] = DTOParameter.fromJson(currencyList[i]);
+                }
+
+                currencyList.removeWhere((x)=> x.Description == "TL");
+
+                Navigator.pop(context);
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MRKTINFO(
+                        Currencies: currencyList,
+                      ),
+                    ));
+              }
+            ],
             [Localizer.Get(Localizer.qr_code_operations), () {}],
             [Localizer.Get(Localizer.credit_calculation), () {}],
             [Localizer.Get(Localizer.settings), () {}],

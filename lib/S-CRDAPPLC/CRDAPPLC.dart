@@ -158,7 +158,6 @@ class _CRDAPPLCState extends State<CRDAPPLC> {
                               BillingDay: billingDayValue)
                         }));
                   } catch (e) {
-                    Navigator.pop(context);
                     HelperMethods.ApiException(context, e.toString());
                     return;
                   }
