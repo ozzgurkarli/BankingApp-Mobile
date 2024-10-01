@@ -364,9 +364,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         return value.GetWithKey("TransactionList");
                       });
                     } catch (e) {
-                      Navigator.pop(context);
-                      HelperMethods.ApiException(context, e.toString(),
-                          popUntil: 1);
+                      HelperMethods.ApiException(context, e.toString());
                       return;
                     }
                     for (var i = 0; i < transactionList.length; i++) {

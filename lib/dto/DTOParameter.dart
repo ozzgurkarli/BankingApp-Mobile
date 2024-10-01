@@ -9,8 +9,10 @@ class DTOParameter
   String? Detail1;
   String? Detail2;
   String? Detail3;
+  String? Detail4;
+  String? Detail5;
 
-  DTOParameter({this.Id, this.GroupCode, this.Code, this.Description, this.Detail1, this.Detail2, this.Detail3});
+  DTOParameter({this.Id, this.GroupCode, this.Code, this.Description, this.Detail1, this.Detail2, this.Detail3, this.Detail4, this.Detail5});
 
   factory DTOParameter.fromJson(Map<dynamic, dynamic> json) {
     return DTOParameter(
@@ -21,6 +23,8 @@ class DTOParameter
       Detail1: json['detail1'] as String?,
       Detail2: json['detail2'] as String?,
       Detail3: json['detail3'] as String?,
+      Detail4: json['detail4'] as String?,
+      Detail5: json['detail5'] as String?,
     );
   }
 
@@ -34,6 +38,8 @@ class DTOParameter
       'Detail1': Detail1,
       'Detail2': Detail2,
       'Detail3': Detail3,
+      'Detail4': Detail4,
+      'Detail5': Detail5,
     };
   }
 }

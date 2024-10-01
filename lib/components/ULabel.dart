@@ -8,22 +8,50 @@ class ULabel extends StatelessWidget {
   Widget? child;
   String? label;
   double? labelPadding;
-  ULabel({super.key, this.label, this.child, this.labelPadding});
+  Widget? tailWidget;
+  ULabel(
+      {super.key, this.label, this.child, this.labelPadding, this.tailWidget});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Padding(
-          padding: EdgeInsets.only(
-              left: labelPadding ?? USize.Width * 0.01, bottom: USize.Width * 0.01),
-          child: UText(
-            label!,
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
+        tailWidget == null ? Padding(
+                padding: EdgeInsets.only(
+                    left: labelPadding ?? USize.Width * 0.01,
+                    bottom: USize.Width * 0.01),
+                child: UText(
+                  label!,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ) :
+        SizedBox(
+          width: USize.Width * 0.7,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                    left: labelPadding ?? USize.Width * 0.01,
+                    bottom: USize.Width * 0.01),
+                child: UText(
+                  label!,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                    right: labelPadding ?? USize.Width * 0.01,
+                    bottom: USize.Width * 0.01),
+                child: tailWidget
+              ),
+            ],
           ),
         ),
         child!

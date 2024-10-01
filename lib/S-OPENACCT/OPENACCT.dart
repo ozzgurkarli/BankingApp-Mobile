@@ -66,7 +66,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   errorText: currencyError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.currency_exchange),
-                  hintText: "${Localizer.Get(Localizer.select_a_currency)}",
+                  hintText: Localizer.Get(Localizer.select_a_currency),
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.currencyList.map((e) {
                     List<String> currencyLocalizer = e.Detail1.split(';');
@@ -92,7 +92,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   errorText: cityError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "${Localizer.Get(Localizer.select_a_city)}",
+                  hintText: Localizer.Get(Localizer.select_a_city),
                   fillColor: UColor.WhiteHeavyColor,
                   items: widget.cityList.map((e) {
                     return DropdownMenuItem(
@@ -115,7 +115,7 @@ class _OPENACCTState extends State<OPENACCT> {
                   errorText: districtError,
                   prefixColor: UColor.PrimaryColor,
                   prefixIcon: const Icon(Icons.location_city_outlined),
-                  hintText: "${Localizer.Get(Localizer.select_a_district)}",
+                  hintText: Localizer.Get(Localizer.select_a_district),
                   fillColor: UColor.WhiteHeavyColor,
                   value: districtValue,
                   items: widget.districtList
@@ -175,7 +175,6 @@ class _OPENACCTState extends State<OPENACCT> {
                               CustomerNo: widget.dtoCustomer.CustomerNo)
                         }));
                   } catch (e) {
-                    Navigator.pop(context);
                     HelperMethods.ApiException(context, e.toString());
                     return;
                   }

@@ -4,6 +4,7 @@ import 'package:dashed_circle/dashed_circle.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parbank/S-LGNPSWRD/LGNPSWRD.dart';
+import 'package:parbank/S-MRKTINFO/MRKTINFO.dart';
 import 'package:parbank/S-REGISTERF/REGISTERF.dart';
 import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/IService.dart';
@@ -240,7 +241,6 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                         response = await UProxy.Get(
                             IService.GET_LOGIN_CREDENTIALS, request);
                       } catch (e) {
-                        Navigator.pop(context);
                         HelperMethods.ApiException(context, e.toString());
                         return;
                       }
@@ -396,24 +396,58 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                           )
                         ],
                       )),
-                  Container(
-                      width: USize.Width / 3,
-                      height: USize.Width / 4,
-                      margin: EdgeInsets.only(
-                          right: USize.Width / 3, top: USize.Width / 4),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          UIconButton(
-                            icon: UIcon(Icons.currency_exchange),
-                            tooltip:
-                                Localizer.Get(Localizer.market_information),
-                          ),
-                          UText(
-                            Localizer.Get(Localizer.market_information),
-                          )
-                        ],
-                      )),
+                  GestureDetector(
+                    onTap: () async {
+                      HelperMethods.SetLoadingScreen(context);
+                      List currencyList;
+
+                      try {
+                        currencyList = await UProxy.Get(
+                            IService.GET_PARAMETERS_BY_GROUP_CODE,
+                            MessageContainer.builder({
+                              "Parameter": DTOParameter(GroupCode: "Currency")
+                            })).then((value) {
+                          return value.GetWithKey("ParameterList");
+                        });
+                      } catch (e) {
+                        HelperMethods.ApiException(context, e.toString());
+                        return;
+                      }
+                      for (var i = 0; i < currencyList.length; i++) {
+                        currencyList[i] =
+                            DTOParameter.fromJson(currencyList[i]);
+                      }
+
+                      currencyList.removeWhere((x) => x.Description == "TL");
+
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MRKTINFO(
+                              Currencies: currencyList,
+                            ),
+                          ));
+                    },
+                    child: Container(
+                        width: USize.Width / 3,
+                        height: USize.Width / 4,
+                        margin: EdgeInsets.only(
+                            right: USize.Width / 3, top: USize.Width / 4),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            UIconButton(
+                              icon: UIcon(Icons.currency_exchange),
+                              tooltip:
+                                  Localizer.Get(Localizer.market_information),
+                            ),
+                            UText(
+                              Localizer.Get(Localizer.market_information),
+                            )
+                          ],
+                        )),
+                  ),
                   Container(
                     height: 1,
                     width: USize.Width / 1.5,
@@ -451,7 +485,6 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
         return value.GetWithKey("ParameterList");
       });
     } catch (e) {
-      Navigator.pop(context);
       HelperMethods.ApiException(context, e.toString());
       return;
     }

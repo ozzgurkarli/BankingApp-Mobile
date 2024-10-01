@@ -132,7 +132,6 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                               value.GetWithKey("DTOCustomer"));
                         });
                       } catch (e) {
-                        Navigator.pop(context);
                         HelperMethods.ApiException(context, e.toString());
                         return;
                       }

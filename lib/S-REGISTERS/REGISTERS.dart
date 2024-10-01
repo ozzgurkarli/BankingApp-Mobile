@@ -257,7 +257,6 @@ class _REGISTERSState extends State<REGISTERS> {
                         color: UColor.WhiteColor,
                       )));
             } catch (e) {
-              Navigator.pop(context);
               HelperMethods.ApiException(context, e.toString());
               return;
             }

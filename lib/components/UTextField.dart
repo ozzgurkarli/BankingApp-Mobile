@@ -19,6 +19,7 @@ class UTextField extends StatelessWidget {
   TextCapitalization? textCapitalization;
   Color? prefixColor;
   Color? fillColor;
+  double? fontSize;
   String? errorText;
   int? maxLength;
   UTextField(
@@ -34,6 +35,7 @@ class UTextField extends StatelessWidget {
       this.onChanged,
       this.prefixIcon,
       this.fillColor,
+      this.fontSize,
       this.errorText,
       this.inputFormatters,
       this.onTap,
@@ -51,7 +53,7 @@ class UTextField extends StatelessWidget {
         textCapitalization: textCapitalization ?? TextCapitalization.none,
         inputFormatters: inputFormatters,
         keyboardType: keyboardType ?? TextInputType.text,
-        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: fontSize ?? 16, fontWeight: FontWeight.w500),
         obscureText: obsecureText ?? false,
         readOnly: readOnly ?? false,
         decoration: InputDecoration(

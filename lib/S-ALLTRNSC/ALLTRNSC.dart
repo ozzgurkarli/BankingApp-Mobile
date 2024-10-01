@@ -30,7 +30,7 @@ class _ALLTRNSCState extends State<ALLTRNSC> {
                 return GestureDetector(
                   onTap: widget.Transactions[index][1],
                   child: Container(
-                      height: USize.Height/12,
+                      height: USize.Height/15,
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       decoration:
                           const BoxDecoration(border: Border(bottom: BorderSide())),
