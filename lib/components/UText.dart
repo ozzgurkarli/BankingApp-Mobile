@@ -12,6 +12,6 @@ class UText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, textAlign: TextAlign.center, style: TextStyle(color: color ?? Colors.black, fontSize: fontSize ?? 16, fontWeight: fontWeight ?? FontWeight.normal),);
+    return Text(text, textAlign: TextAlign.center, style: TextStyle(color: color ?? Colors.black, fontSize: fontSize ?? 15, fontWeight: fontWeight ?? FontWeight.normal),);
   }
 }

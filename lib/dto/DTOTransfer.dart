@@ -3,9 +3,9 @@
 class DTOTransfer
 {
   int? Id;
-  String? SenderAccount;
+  String? SenderAccountNo;
   String? SenderCustomerNo;
-  String? RecipientAccount;
+  String? RecipientAccountNo;
   String? Currency;
   double? Amount;
   int? SenderAccountId;
@@ -13,14 +13,14 @@ class DTOTransfer
   DateTime? TransactionDate;
   DateTime? OrderDate;
 
-  DTOTransfer({this.Id, this.SenderAccount, this.Currency, this.SenderAccountId, this.SenderCustomerNo, this.RecipientAccount, this.Amount, this.Status, this.TransactionDate, this.OrderDate});
+  DTOTransfer({this.Id, this.SenderAccountNo, this.Currency, this.SenderAccountId, this.SenderCustomerNo, this.RecipientAccountNo, this.Amount, this.Status, this.TransactionDate, this.OrderDate});
 
   factory DTOTransfer.fromJson(Map<dynamic, dynamic> json) {
     return DTOTransfer(
       Id: json['id'] as int?,
-      SenderAccount: json['senderAccount'] as String?,
+      SenderAccountNo: json['senderAccountNo'] as String?,
       SenderCustomerNo: json['senderCustomerNo'] as String?,
-      RecipientAccount: json['recipientAccount'] as String?,
+      RecipientAccountNo: json['recipientAccountNo'] as String?,
       Amount: double.parse(json['amount'].toString()) as double?,
       Currency: json['currency'] as String?,
       SenderAccountId: json['senderAccountId'] as int?,
@@ -34,13 +34,13 @@ class DTOTransfer
   Map<String, dynamic> toJson() {
     return {
       'Id': Id,
-      'SenderAccount': SenderAccount,
-      'RecipientAccount': RecipientAccount,
+      'SenderAccountNo': SenderAccountNo,
+      'RecipientAccountNo': RecipientAccountNo,
       'SenderCustomerNo': SenderCustomerNo,
       'Amount': Amount,
       'SenderAccountId': SenderAccountId,
       'TransactionDate': TransactionDate,
-      'OrderDate': OrderDate!.toIso8601String(),
+      'OrderDate': (OrderDate ?? DateTime(1)).toIso8601String(),
       'Status': Status,
       'Currency': Currency,
     };

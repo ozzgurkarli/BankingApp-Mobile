@@ -25,7 +25,7 @@ class ULabel extends StatelessWidget {
                     bottom: USize.Width * 0.01),
                 child: UText(
                   label!,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
               ) :
@@ -37,11 +37,10 @@ class ULabel extends StatelessWidget {
             children: [
               Padding(
                 padding: EdgeInsets.only(
-                    left: labelPadding ?? USize.Width * 0.01,
-                    bottom: USize.Width * 0.01),
+                    left: labelPadding ?? USize.Width * 0.01),
                 child: UText(
                   label!,
-                  fontSize: 16,
+                  fontSize: 15,
                   fontWeight: FontWeight.w600,
                 ),
               ),

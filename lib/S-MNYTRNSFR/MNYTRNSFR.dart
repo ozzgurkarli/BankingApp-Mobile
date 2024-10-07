@@ -47,6 +47,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
 
   bool identityNoEnabled = true;
   bool? dateValue = false;
+  bool parbankCustomer = false;
 
   DTOAccount? selectedAccount;
 
@@ -117,11 +118,10 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                 tailWidget: UTextButton(
                   child: UText(
                     "Kayıtlı Alıcılar",
-                    fontSize: 14,
+                    fontSize: 13,
                     color: UColor.PrimaryColor,
                   ),
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                 ),
                 child: USegmentedButton(
                     segments: [
@@ -129,18 +129,20 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                           value: '0',
                           label: UText(
                             "IBAN",
-                            fontSize: 14,
+                            fontSize: 13,
                           )),
                       ButtonSegment(
                           value: '1',
                           enabled: identityNoEnabled,
                           label: UText(
                             Localizer.Get(Localizer.identity_no),
-                            fontSize: 14,
+                            fontSize: 13,
                           ))
                     ],
                     onSelectionChanged: (p0) {
                       setState(() {
+                        parbankCustomer = false;
+                        nameSurnameController.text = "";
                         recipientController.text = "";
                         segmentSelected = p0;
                       });
@@ -153,7 +155,13 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                   recipientError = null;
                 });
               },
-              fontSize: segmentSelected.first == "0" ? 11.5 : 16,
+              onSubmitted1: (p0) async {
+                checkRecipient();
+              },
+              onSubmitted2: (p0) {
+                checkRecipient();
+              },
+              fontSize: segmentSelected.first == "0" ? 11.5 : 15,
               controller: recipientController,
               inputFormatters: segmentSelected.first == "0"
                   ? [
@@ -178,6 +186,10 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
             ),
             Gap(USize.Height / 67),
             UTextField(
+              readOnly: parbankCustomer,
+              onTap: () {
+                checkRecipient();
+              },
               onChanged: (p0) {
                 setState(() {
                   nameSurnameError = null;
@@ -300,9 +312,9 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
                   DTOTransfer dtoTransfer = DTOTransfer(
                     Amount:
                         double.parse(amountController.text.replaceAll(',', '')),
-                    SenderAccountId: selectedAccount!.Id,
+                    SenderAccountNo: selectedAccount!.AccountNo,
                     SenderCustomerNo: widget.customer.CustomerNo,
-                    RecipientAccount: recipientController.text,
+                    RecipientAccountNo: recipientController.text,
                     Currency: selectedAccount!.Currency,
                   );
                   dtoTransfer.OrderDate = DateTime.parse(
@@ -331,5 +343,38 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
         ),
       ),
     );
+  }
+
+  void checkRecipient() async {
+    if (!parbankCustomer &&
+            (segmentSelected.first == "0" &&
+                recipientController.text.length == 32 &&
+                recipientController.text.substring(2, 4) == "11") ||
+        (segmentSelected.first == "1" &&
+            recipientController.text.length == 11)) {
+      HelperMethods.SetLoadingScreen(context);
+      DTOCustomer dtoCustomer;
+
+      try {
+        dtoCustomer = await UProxy.Get(
+            IService.CHECK_RECIPIENT_CUSTOMER,
+            MessageContainer.builder({
+              "DTOTransfer":
+                  DTOTransfer(RecipientAccountNo: recipientController.text),
+            })).then((value) {
+          return DTOCustomer.fromJson(value.GetWithKey("DTOCustomer"));
+        });
+      } catch (e) {
+        HelperMethods.ApiException(context, e.toString());
+        return;
+      }
+
+      setState(() {
+        Navigator.pop(context);
+        parbankCustomer = true;
+        nameSurnameController.text =
+            "${dtoCustomer.Name} ${dtoCustomer.Surname}";
+      });
+    }
   }
 }
