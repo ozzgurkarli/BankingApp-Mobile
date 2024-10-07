@@ -67,7 +67,7 @@ class _REGISTERFState extends State<REGISTERF> {
             Gap(USize.Height / 27),
             UText(
               "Müşteri Bilgileri",
-              fontSize: 22,
+              fontSize: 21,
               fontWeight: FontWeight.w500,
             ),
             Gap(USize.Height / 27),

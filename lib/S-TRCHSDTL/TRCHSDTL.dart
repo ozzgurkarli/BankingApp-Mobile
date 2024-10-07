@@ -129,7 +129,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                                 UText(
                                   DateFormat('dd/MM/yyyy').format(widget
                                       .Transactions[index].TransactionDate),
-                                  fontSize: 14,
+                                  fontSize: 13,
                                   color: UColor.BarrierColor,
                                 )
                               ],

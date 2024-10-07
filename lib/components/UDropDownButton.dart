@@ -27,7 +27,7 @@ class UDropDownButton extends StatelessWidget {
               fillColor: errorText != null ? UColor.RedLightColor : fillColor,
               hintText: hintText,
               hintStyle:
-                  const TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               prefixIcon: Padding(
                 padding: EdgeInsets.symmetric(horizontal: USize.Width * 0.05),
                 child: prefixIcon,
@@ -35,7 +35,7 @@ class UDropDownButton extends StatelessWidget {
               errorText: errorText,
               errorStyle: const TextStyle(
                   color: UColor.RedHeavyColor,
-                  fontSize: 14,
+                  fontSize: 13,
                   fontWeight: FontWeight.w500),
               errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),

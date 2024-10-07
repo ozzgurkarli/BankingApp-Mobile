@@ -11,6 +11,8 @@ class UTextField extends StatelessWidget {
   double? width;
   bool? obsecureText;
   Function(String)? onChanged;
+  Function(String)? onSubmitted1;
+  Function(PointerDownEvent)? onSubmitted2;
   Function()? onTap;
   bool? readOnly;
   String? hintText;
@@ -36,6 +38,8 @@ class UTextField extends StatelessWidget {
       this.prefixIcon,
       this.fillColor,
       this.fontSize,
+      this.onSubmitted1,
+      this.onSubmitted2,
       this.errorText,
       this.inputFormatters,
       this.onTap,
@@ -53,8 +57,13 @@ class UTextField extends StatelessWidget {
         textCapitalization: textCapitalization ?? TextCapitalization.none,
         inputFormatters: inputFormatters,
         keyboardType: keyboardType ?? TextInputType.text,
-        style: TextStyle(fontSize: fontSize ?? 16, fontWeight: FontWeight.w500),
+        style: TextStyle(fontSize: fontSize ?? 15, fontWeight: FontWeight.w500),
         obscureText: obsecureText ?? false,
+        onSubmitted: onSubmitted1,
+        onEditingComplete: () {
+          print("object");
+        },
+        onTapOutside: onSubmitted2,
         readOnly: readOnly ?? false,
         decoration: InputDecoration(
             filled: fillColor != null,
@@ -63,15 +72,16 @@ class UTextField extends StatelessWidget {
             hintText: hintText,
             alignLabelWithHint: true,
             hintStyle:
-                const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, ),
+                const TextStyle(fontSize: 15, fontWeight: FontWeight.w500, ),
             prefixIcon: Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width * 0.05),
               child: prefixIcon,
             ),
             errorText: errorText,
+            
             errorStyle: const TextStyle(
                 color: UColor.RedHeavyColor,
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: FontWeight.w500),
             errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12),

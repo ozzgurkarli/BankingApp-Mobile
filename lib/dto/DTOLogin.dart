@@ -13,7 +13,7 @@ class DTOLogin{
     return DTOLogin(
       Id: json['id'] as int?,
       IdentityNo: json['identityNo'] as String?,
-      Password: json['password'] as int?,
+      Password: int.parse(((json['password'] as String).length == 6 ? json['password'] as String : "100000")),
       Temporary: json['temporary'] as bool?,
       Token: json['token'] as String?,
     );
@@ -24,7 +24,7 @@ class DTOLogin{
     return {
       'Id': Id,
       'IdentityNo': IdentityNo,
-      'Password': Password,
+      'Password': Password.toString(),
       'Temporary': Temporary,
     };
   }

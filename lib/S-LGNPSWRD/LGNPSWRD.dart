@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:parbank/S-BTMGNRTR/BTMGNRTR.dart';
 import 'package:parbank/S-NEWPSWRD/NEWPSWRD.dart';
+import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
@@ -46,7 +47,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
-      isLogged: false,
+        isLogged: false,
         actions: [
           UTextButton(
             onPressed: () {
@@ -87,7 +88,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                       width: USize.Width / 9,
                       height: USize.Width / 9,
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 20, color: Colors.white),
+                          fontSize: 19, color: Colors.white),
                       decoration:
                           const BoxDecoration(color: UColor.PrimaryLightColor),
                     ),
@@ -96,7 +97,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                       width: USize.Width / 9,
                       height: USize.Width / 9,
                       textStyle: GoogleFonts.poppins(
-                          fontSize: 20, color: Colors.white),
+                          fontSize: 19, color: Colors.white),
                       decoration:
                           const BoxDecoration(color: UColor.PrimaryColor),
                     ),
@@ -117,8 +118,46 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                       return;
                     }
 
-                    if (widget.dtoLogin.Password ==
-                        int.tryParse(controller.text)) {
+                    if (controller.text.length != 6) {
+                      HelperMethods.SetBottomSheet(
+                          context,
+                          Localizer.Get(Localizer.incorrect_password_entry) +
+                              Localizer.Get(
+                                  Localizer.password_must_be_6_char_long),
+                          UAsset.ERROR_GIF,
+                          Localizer.Get(Localizer.error),
+                          UButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: UText(
+                                Localizer.Get(Localizer.ok),
+                                color: UColor.WhiteColor,
+                              )));
+                      return;
+                    }
+
+                    HelperMethods.SetLoadingScreen(context);
+                    MessageContainer request = MessageContainer();
+                    request.Add(
+                        "DTOLogin",
+                        DTOLogin(
+                            IdentityNo: widget.dtoLogin.IdentityNo,
+                            Password: int.parse(controller.text)));
+                    MessageContainer response;
+                    try {
+                      response = await UProxy.Get(
+                          IService.GET_LOGIN_CREDENTIALS, request);
+                    } catch (e) {
+                      HelperMethods.ApiException(context, e.toString());
+                      return;
+                    }
+                    if (response.GetWithKey(
+                            "BankingApp.Common.DataTransferObjects.DTOLogin") !=
+                        null) {
+                      DTOLogin dtoLogin = response.GetWithKey(
+                          "BankingApp.Common.DataTransferObjects.DTOLogin");
+                      ENV.Token = dtoLogin.Token;
                       HelperMethods.SetLoadingScreen(context);
                       late DTOCustomer customer;
                       try {
@@ -156,22 +195,6 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                                     BTMGNRTR(customer: customer)),
                             (route) => false);
                       }
-                    } else if (controller.text.length != 6) {
-                      HelperMethods.SetBottomSheet(
-                          context,
-                          Localizer.Get(Localizer.incorrect_password_entry) +
-                              Localizer.Get(
-                                  Localizer.password_must_be_6_char_long),
-                          UAsset.ERROR_GIF,
-                          Localizer.Get(Localizer.error),
-                          UButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              child: UText(
-                                Localizer.Get(Localizer.ok),
-                                color: UColor.WhiteColor,
-                              )));
                     } else {
                       remainingAttempts -= 1;
                       controller.text = "";

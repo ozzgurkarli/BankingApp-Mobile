@@ -67,7 +67,8 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         IService.GET_ACCOUNTS,
                         MessageContainer.builder({
                           "DTOAccount": DTOAccount(
-                              CustomerNo: widget.customer.CustomerNo),
+                              CustomerNo: widget.customer.CustomerNo,
+                              Active: true),
                         })),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -101,7 +102,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                           UText(
                                             "${Localizer.Get(Localizer.currency_type)}:",
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 14,
+                                            fontSize: 13,
                                             color: UColor.WhiteColor,
                                           ),
                                           UText(
@@ -133,7 +134,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                           UText(
                                             "${Localizer.Get(Localizer.balance)}:",
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 14,
+                                            fontSize: 13,
                                             color: UColor.WhiteColor,
                                           ),
                                           Row(
@@ -175,7 +176,8 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         IService.GET_CREDIT_CARDS,
                         MessageContainer.builder({
                           "DTOCreditCard": DTOCreditCard(
-                              CustomerNo: widget.customer.CustomerNo),
+                              CustomerNo: widget.customer.CustomerNo,
+                              Active: true),
                         })),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
@@ -229,7 +231,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                                   cardList[index].CardNo),
                                               fontWeight: FontWeight.w700,
                                               color: UColor.WhiteColor,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                             ),
                                             Row(
                                               mainAxisSize: MainAxisSize.max,
@@ -257,7 +259,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                         cardList[index].TypeName,
                                         fontWeight: FontWeight.w600,
                                         color: UColor.WhiteColor,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       ),
                                     ),
                                     Container(
@@ -270,7 +272,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                           UText(
                                             "${Localizer.Get(Localizer.outstanding_balance)}:",
                                             fontWeight: FontWeight.w400,
-                                            fontSize: 14,
+                                            fontSize: 13,
                                             color: UColor.WhiteColor,
                                           ),
                                           Row(

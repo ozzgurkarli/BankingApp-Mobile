@@ -87,7 +87,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
                     width: USize.Width / 9,
                     height: USize.Width / 9,
                     textStyle:
-                        GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                        GoogleFonts.poppins(fontSize: 19, color: Colors.white),
                     decoration:
                         const BoxDecoration(color: UColor.PrimaryLightColor),
                   ),
@@ -96,7 +96,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
                     width: USize.Width / 9,
                     height: USize.Width / 9,
                     textStyle:
-                        GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                        GoogleFonts.poppins(fontSize: 19, color: Colors.white),
                     decoration: const BoxDecoration(color: UColor.PrimaryColor),
                   ),
                 ),
@@ -125,7 +125,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
                     width: USize.Width / 9,
                     height: USize.Width / 9,
                     textStyle:
-                        GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                        GoogleFonts.poppins(fontSize: 19, color: Colors.white),
                     decoration:
                         const BoxDecoration(color: UColor.PrimaryLightColor),
                   ),
@@ -134,7 +134,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
                     width: USize.Width / 9,
                     height: USize.Width / 9,
                     textStyle:
-                        GoogleFonts.poppins(fontSize: 20, color: Colors.white),
+                        GoogleFonts.poppins(fontSize: 19, color: Colors.white),
                     decoration: const BoxDecoration(color: UColor.PrimaryColor),
                   ),
                 ),

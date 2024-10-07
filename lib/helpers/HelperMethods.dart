@@ -133,7 +133,7 @@ class HelperMethods {
                 UText(
                   labelText,
                   fontWeight: FontWeight.w500,
-                  fontSize: 28,
+                  fontSize: 26,
                 ),
                 Gap(USize.Height / 25),
                 HelperMethods.ShowAsset(
@@ -182,7 +182,7 @@ class HelperMethods {
                 UText(
                   Localizer.Get(Localizer.error),
                   fontWeight: FontWeight.w500,
-                  fontSize: 28,
+                  fontSize: 26,
                 ),
                 Gap(USize.Height / 33),
                 HelperMethods.ShowAsset(

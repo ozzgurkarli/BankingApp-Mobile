@@ -105,7 +105,7 @@ class _TRACTHSTState extends State<TRACTHST> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 widget.Transactions[index].Amount > 0 ? UText(Localizer.Get(Localizer.incoming), color: Colors.green,) : UText(Localizer.Get(Localizer.outgoing), color: Colors.red,) ,
-                                UText(DateFormat('dd/MM/yyyy').format(widget.Transactions[index].TransactionDate), fontSize: 14, color: UColor.BarrierColor,)
+                                UText(DateFormat('dd/MM/yyyy').format(widget.Transactions[index].TransactionDate), fontSize: 13, color: UColor.BarrierColor,)
                               ],
                             ),
                             UText("${HelperMethods.RemoveZerosAndFormat(widget.Transactions[index].Amount.abs())} ${widget.Transactions[index].Currency}"),

@@ -92,7 +92,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                                         .characters
                                         .first
                                         .toUpperCase(),
-                                fontSize: 54,
+                                fontSize: 51,
                                 color: UColor.SecondHeavyColor,
                               ),
                             ),
@@ -104,11 +104,11 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                           children: [
                             UText(
                               Localizer.Get(Localizer.welcome___with_comma),
-                              fontSize: 18,
+                              fontSize: 17,
                             ),
                             UText(
                               snapshot.data![0]!,
-                              fontSize: 18,
+                              fontSize: 17,
                               fontWeight: FontWeight.w600,
                             ),
                           ],
@@ -192,7 +192,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                               width: USize.Width / 13,
                               height: USize.Width / 13,
                               textStyle: GoogleFonts.poppins(
-                                  fontSize: 20, color: Colors.white),
+                                  fontSize: 19, color: Colors.white),
                               decoration: const BoxDecoration(
                                   color: UColor.PrimaryLightColor),
                             ),
@@ -201,7 +201,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                               width: USize.Width / 13,
                               height: USize.Width / 13,
                               textStyle: GoogleFonts.poppins(
-                                  fontSize: 20, color: Colors.white),
+                                  fontSize: 19, color: Colors.white),
                               decoration: const BoxDecoration(
                                   color: UColor.PrimaryColor),
                             ),
@@ -258,20 +258,9 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                                     )));
                       } else {
                         controller.text = "";
-                        HelperMethods.SetBottomSheet(
-                            context,
-                            Localizer.Get(Localizer
-                                .no_customers_matching_entered_information),
-                            UAsset.ERROR_GIF,
-                            Localizer.Get(Localizer.error),
-                            UButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: UText(
-                                  Localizer.Get(Localizer.ok),
-                                  color: UColor.WhiteColor,
-                                )));
+                        HelperMethods.ApiException(context, Localizer.Get(Localizer
+                                .no_customers_matching_entered_information));
+                        
                       }
                     }
                   },
