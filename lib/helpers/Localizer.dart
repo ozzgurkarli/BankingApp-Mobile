@@ -90,6 +90,8 @@ class Localizer
   static const List<String> balance = ["Bakiye", "Balance"];
     static const List<String> send_postdated = ["İleri Tarihli Gönder", "Send Postdated"];
     static const List<String> transaction_queued = ["İşlemin sıraya alındı.", "Your process has been queued."];
+    static const List<String> only_revenue_transactions = ["Yalnızca gelir işlemlerini göster", "Show only revenue transactions"];
+    static const List<String> only_expense_transactions = ["Yalnızca gider işlemlerini göster", "Show only expense transactions"];
     static const List<String> no_credit_card = ["Henüz bir kredi kartın yok. 'Tüm İşlemler' menüsünden kart başvurusunda bulunabilirsin.", 
 "You don't have a credit card yet. You can apply for one from the 'All Transactions' menu."];
   static const List<String> outstanding_balance = ["Kullanılabilir Limit", "Outstanding Balance"];

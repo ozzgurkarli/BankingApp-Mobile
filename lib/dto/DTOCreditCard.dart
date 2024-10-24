@@ -14,8 +14,11 @@ class DTOCreditCard
   int? CVV;
   int? BillingDay;
   DateTime? ExpirationDate;
+  int? InstallmentCount;
+  double? Amount;
+  String? TransactionCompany;
 
-  DTOCreditCard({this.Id, this.CardNo, this.Limit, this.TypeName, this.CVV, this.CustomerNo, this.Active, this.CurrentDebt, this.Type, this.ExpirationDate, this.BillingDay, this.OutstandingBalance});
+  DTOCreditCard({this.Id, this.CardNo, this.Limit, this.TypeName, this.CVV, this.CustomerNo, this.Active, this.CurrentDebt, this.Type, this.ExpirationDate, this.BillingDay, this.OutstandingBalance, this.Amount, this.InstallmentCount, this.TransactionCompany});
 
   factory DTOCreditCard.fromJson(Map<dynamic, dynamic> json) {
     return DTOCreditCard(
@@ -31,6 +34,9 @@ class DTOCreditCard
       BillingDay: json['billingDay'] as int?,
       Active: json['active'] as bool?,
       ExpirationDate: DateTime.parse(json['expirationDate']) as DateTime?,
+      Amount: double.parse(json['amount'].toString() != "null" ? json['amount'].toString() : "0") as double?,
+      InstallmentCount: json['installmentCount'] as int?,
+      TransactionCompany: json['TransactionCompany'] as String?,
     );
   }
 
@@ -48,6 +54,9 @@ class DTOCreditCard
       'Limit': Limit,
       'Active': Active,
       'CurrentDebt': CurrentDebt,
+      'InstallmentCount': InstallmentCount,
+      'Amount': Amount,
+      'TransactionCompany': TransactionCompany
     };
   }
 }

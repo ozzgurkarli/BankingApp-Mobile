@@ -13,8 +13,11 @@ import 'package:parbank/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/components/UButton.dart';
+import 'package:parbank/components/UIcon.dart';
+import 'package:parbank/components/UIconButton.dart';
 import 'package:parbank/components/UText.dart';
 import 'package:parbank/dto/DTOAccount.dart';
+import 'package:parbank/dto/DTOCreditCard.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
 import 'package:parbank/dto/DTOParameter.dart';
 import 'package:parbank/dto/DTOTransactionHistory.dart';
@@ -215,7 +218,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                   currencyList[i] = DTOParameter.fromJson(currencyList[i]);
                 }
 
-                currencyList.removeWhere((x)=> x.Description == "TL");
+                currencyList.removeWhere((x) => x.Description == "TL");
 
                 Navigator.pop(context);
                 Navigator.push(
@@ -227,7 +230,31 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     ));
               }
             ],
-            [Localizer.Get(Localizer.qr_code_operations), () {}],
+            [
+              Localizer.Get(Localizer.qr_code_operations),
+              () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ALLTRNSC(
+                                customer: widget.customer,
+                                leading: UIconButton(
+                                  icon: UIcon(
+                                    Icons.arrow_circle_left_outlined,
+                                    color: UColor.WhiteHeavyColor,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                                Transactions: [
+                                  ["PARA ÇEK", () {}],
+                                  ["PARA YATIR", () {}],
+                                  ["PARA TRANSFERİ", () {}],
+                                  ["KAREKODLARIM", () {}],
+                                ])));
+              }
+            ],
             [Localizer.Get(Localizer.credit_calculation), () {}],
             [Localizer.Get(Localizer.settings), () {}],
             [
@@ -272,6 +299,45 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                     ));
               }
             ],
+            [
+              "TAKSITSIZ HARCAMA",
+              () async {
+                try {
+                  await UProxy.Get(
+                      IService.CARD_EXPENSE_PAYMENT,
+                      MessageContainer.builder({
+                        "DTOCreditCard": DTOCreditCard(
+                            CardNo: "5301291000000009", Amount: 1000)
+                      })).then((value) {
+                    return value.GetWithKey("TransactionList");
+                  });
+                } catch (e) {
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+              }
+            ],
+            [
+              "TAKSITLI HARCAMA",
+              () async {
+                try {
+                  await UProxy.Get(
+                      IService.CARD_EXPENSE_PAYMENT,
+                      MessageContainer.builder({
+                        "DTOCreditCard": DTOCreditCard(
+                            CardNo: "5301291000000009",
+                            Amount: 1000,
+                            TransactionCompany: "GS STORE",
+                            InstallmentCount: 6)
+                      })).then((value) {
+                    return value.GetWithKey("TransactionList");
+                  });
+                } catch (e) {
+                  HelperMethods.ApiException(context, e.toString());
+                  return;
+                }
+              }
+            ]
           ],
         ),
       ][currentPageIndex],

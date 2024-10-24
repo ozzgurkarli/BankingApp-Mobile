@@ -10,7 +10,8 @@ import 'package:parbank/helpers/USize.dart';
 class ALLTRNSC extends StatefulWidget {
   DTOCustomer customer;
   List Transactions;
-  ALLTRNSC({super.key, required this.customer, required this.Transactions});
+  Widget? leading;
+  ALLTRNSC({super.key, required this.customer, required this.Transactions, this.leading});
 
   @override
   State<ALLTRNSC> createState() => _ALLTRNSCState();
@@ -20,6 +21,7 @@ class _ALLTRNSCState extends State<ALLTRNSC> {
   @override
   Widget build(BuildContext context) {
     return UScaffold(
+      leading: widget.leading,
       body: Center(
         child: Column(
           children: [
