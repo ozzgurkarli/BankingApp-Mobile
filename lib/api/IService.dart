@@ -18,4 +18,5 @@ class IService
   static const String GET_TRANSACTION_HISTORY = "TransactionHistory/GetTransactionHistory";
   static const String TRIGGER_SCHEDULES = "Schedule/TriggerSchedules";
   static const String CHECK_RECIPIENT_CUSTOMER = "Transfer/CheckRecipientCustomer";
+  static const String SELECT_CC_WITH_DETAILS = "CreditCard/SelectCreditCardWithDetails";
 }

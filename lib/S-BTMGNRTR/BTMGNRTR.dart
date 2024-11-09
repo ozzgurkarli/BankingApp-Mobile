@@ -307,7 +307,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                       IService.CARD_EXPENSE_PAYMENT,
                       MessageContainer.builder({
                         "DTOCreditCard": DTOCreditCard(
-                            CardNo: "5301291000000009", Amount: 1000)
+                            CardNo: "5301291000000012", Amount: 1000)
                       })).then((value) {
                     return value.GetWithKey("TransactionList");
                   });
@@ -325,7 +325,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                       IService.CARD_EXPENSE_PAYMENT,
                       MessageContainer.builder({
                         "DTOCreditCard": DTOCreditCard(
-                            CardNo: "5301291000000009",
+                            CardNo: "5301291000000012",
                             Amount: 1000,
                             TransactionCompany: "GS STORE",
                             InstallmentCount: 6)
