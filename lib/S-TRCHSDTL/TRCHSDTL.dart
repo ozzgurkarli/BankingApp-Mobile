@@ -25,6 +25,7 @@ class TRCHSDTL extends StatefulWidget {
 
 class _TRCHSDTLState extends State<TRCHSDTL> {
   List FilteredTransactions = [];
+  DTOTransactionHistory filter = DTOTransactionHistory();
 
   @override
   void initState() {
@@ -54,33 +55,40 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 10),
               child: UButton(
                 onPressed: () async {
-                  DTOTransactionHistory filter = await Navigator.push(
+                  filter = await Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const TRCHSFLT()));
-
+                          builder: (context) => TRCHSFLT(filter: filter,)));
+                  FilteredTransactions = widget.Transactions;
                   setState(() {
                     if (filter.MinDate != null &&
                         filter.MinDate!.isAfter(DateTime(1))) {
-                      FilteredTransactions.where(
-                          (x) => !x.TransactionDate!.isBefore(filter.MinDate));
+                      FilteredTransactions = FilteredTransactions.where(
+                          (x) => !x.TransactionDate!.isBefore(filter.MinDate)).toList();
                     }
                     if (filter.MaxDate != null &&
                         filter.MaxDate!.isAfter(DateTime(1))) {
-                      FilteredTransactions.where(
-                          (x) => !x.TransactionDate!.isAfter(filter.MaxDate));
+                      FilteredTransactions = FilteredTransactions.where(
+                          (x) => !x.TransactionDate!.isAfter(filter.MaxDate)).toList();
                     }
                     if (filter.TransactionType != null) {
-                      FilteredTransactions.where(
-                          (x) => x.TransactionType == filter.TransactionType);
+                      FilteredTransactions = FilteredTransactions.where(
+                          (x) => x.TransactionType == filter.TransactionType).toList();
                     }
                     if (filter.MinAmount != null && filter.MinAmount! > 0) {
-                      FilteredTransactions.where(
-                          (x) => x.Amount >= filter.MinAmount);
+                      FilteredTransactions = FilteredTransactions = FilteredTransactions.where(
+                          (x) => x.Amount.abs() >= filter.MinAmount).toList();
                     }
                     if (filter.MaxAmount != null && filter.MaxAmount! > 0) {
-                      FilteredTransactions.where(
-                          (x) => x.Amount <= filter.MaxAmount);
+                      FilteredTransactions = FilteredTransactions.where(
+                          (x) => x.Amount.abs() <= filter.MaxAmount).toList();
+                    }
+
+                    if(filter.Amount != null && filter.Amount! > 0){
+                      FilteredTransactions = FilteredTransactions.where((x)=> x.Amount > 0).toList();
+                    }
+                    else if(filter.Amount != null && filter.Amount! < 0){
+                      FilteredTransactions = FilteredTransactions.where((x)=> x.Amount < 0).toList();
                     }
                   });
                 },
@@ -103,7 +111,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                 width: USize.Width,
                 height: USize.Height * 0.86,
                 child: ListView.builder(
-                  itemCount: widget.Transactions.length,
+                  itemCount: FilteredTransactions.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       child: Container(
@@ -117,7 +125,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                widget.Transactions[index].Amount > 0
+                                FilteredTransactions[index].Amount > 0
                                     ? UText(
                                         Localizer.Get(Localizer.incoming),
                                         color: Colors.green,
@@ -135,7 +143,7 @@ class _TRCHSDTLState extends State<TRCHSDTL> {
                               ],
                             ),
                             UText(
-                                "${HelperMethods.RemoveZerosAndFormat(widget.Transactions[index].Amount.abs())} ${widget.Transactions[index].Currency}"),
+                                "${HelperMethods.RemoveZerosAndFormat(FilteredTransactions[index].Amount.abs())} ${FilteredTransactions[index].Currency}"),
                             UIcon(Icons.keyboard_arrow_right_outlined)
                           ],
                         ),

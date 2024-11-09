@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:easy_mask/easy_mask.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
@@ -11,36 +13,62 @@ import 'package:parbank/components/UScaffold.dart';
 import 'package:parbank/components/UText.dart';
 import 'package:parbank/components/UTextField.dart';
 import 'package:parbank/dto/DTOTransactionHistory.dart';
+import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
 import 'package:parbank/helpers/UColor.dart';
 import 'package:parbank/helpers/USize.dart';
 
 class TRCHSFLT extends StatefulWidget {
-  const TRCHSFLT({super.key});
+  DTOTransactionHistory filter;
+  TRCHSFLT({super.key, required this.filter});
 
   @override
   State<TRCHSFLT> createState() => _TRCHSFLTState();
 }
 
 class _TRCHSFLTState extends State<TRCHSFLT> {
-  DTOTransactionHistory filter = DTOTransactionHistory();
-
   TextEditingController minDateController = TextEditingController();
   TextEditingController maxDateController = TextEditingController();
   TextEditingController minAmountController = TextEditingController();
   TextEditingController maxAmountController = TextEditingController();
+
+  bool? onlyIncomingTransactions = false;
+  bool? onlyExpenseTransactions = false;
+
+  @override
+  void initState() {
+    if (widget.filter.MinDate != null) {
+      minDateController.text = widget.filter.MinDate.toString();
+    }
+    if (widget.filter.MaxDate != null) {
+      maxDateController.text = widget.filter.MaxDate.toString();
+    }
+    if (widget.filter.MinAmount != null) {
+      minAmountController.text = HelperMethods.FormatBalance(widget.filter.MinAmount!);
+    }
+    if (widget.filter.MaxAmount != null) {
+      maxAmountController.text = HelperMethods.FormatBalance(widget.filter.MaxAmount!);
+    }
+
+    onlyIncomingTransactions = widget.filter.Amount != null && widget.filter.Amount! > 0;
+    onlyExpenseTransactions = widget.filter.Amount != null && widget.filter.Amount! < 0;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     if (minAmountController.text.isEmpty) {
       minAmountController.text = "0.00";
     } else if (minAmountController.text.length > 2) {
-      minAmountController.text = minAmountController.text.replaceAll(r'^0+', '');
+      minAmountController.text =
+          minAmountController.text.replaceAll(r'^0+', '');
     }
     if (maxAmountController.text.isEmpty) {
       maxAmountController.text = "0.00";
     } else if (maxAmountController.text.length > 2) {
-      maxAmountController.text = maxAmountController.text.replaceAll(r'^0+', '');
+      maxAmountController.text =
+          maxAmountController.text.replaceAll(r'^0+', '');
     }
     return UScaffold(
       leading: UIconButton(
@@ -49,7 +77,7 @@ class _TRCHSFLTState extends State<TRCHSFLT> {
           color: UColor.WhiteHeavyColor,
         ),
         onPressed: () {
-          Navigator.pop(context, filter);
+          Navigator.pop(context, widget.filter);
         },
       ),
       body: Center(
@@ -89,7 +117,7 @@ class _TRCHSFLTState extends State<TRCHSFLT> {
                 ),
               ],
             ),
-            Gap(USize.Height/33),
+            Gap(USize.Height / 33),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -143,7 +171,59 @@ class _TRCHSFLTState extends State<TRCHSFLT> {
                 ),
               ],
             ),
-            Gap(USize.Height/20),
+            Gap(USize.Height / 33),
+            SizedBox(
+              width: USize.Width * 0.72,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Checkbox(
+                      value: onlyIncomingTransactions,
+                      splashRadius: 0,
+                      tristate: false,
+                      activeColor: UColor.PrimaryColor,
+                      onChanged: (value) {
+                        setState(() {
+                          onlyIncomingTransactions = value;
+
+                          if (onlyExpenseTransactions! &&
+                              onlyIncomingTransactions!) {
+                            onlyExpenseTransactions = false;
+                          }
+                        });
+                      }),
+                  UText(Localizer.Get(Localizer.only_revenue_transactions))
+                ],
+              ),
+            ),
+            Gap(USize.Height / 100),
+            SizedBox(
+              width: USize.Width * 0.72,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Checkbox(
+                      value: onlyExpenseTransactions,
+                      splashRadius: 0,
+                      tristate: false,
+                      activeColor: UColor.PrimaryColor,
+                      onChanged: (value) {
+                        setState(() {
+                          onlyExpenseTransactions = value;
+
+                          if (onlyExpenseTransactions! &&
+                              onlyIncomingTransactions!) {
+                            onlyIncomingTransactions = false;
+                          }
+                        });
+                      }),
+                  UText(Localizer.Get(Localizer.only_expense_transactions))
+                ],
+              ),
+            ),
+            Gap(USize.Height / 20),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 10),
               child: UButton(
@@ -164,11 +244,21 @@ class _TRCHSFLTState extends State<TRCHSFLT> {
                 ),
               ),
             ),
-            Gap(USize.Height/100),
+            Gap(USize.Height / 100),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: USize.Width / 10),
               child: UButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pop(
+                      context,
+                      DTOTransactionHistory(
+                        MinAmount: double.parse(
+                            minAmountController.text.replaceAll(',', '')),
+                        MaxAmount: double.parse(
+                            maxAmountController.text.replaceAll(',', '')),
+                            Amount: onlyIncomingTransactions! ? 1 : onlyExpenseTransactions! ? -1 : 0
+                      ));
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

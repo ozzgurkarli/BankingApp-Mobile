@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:hugeicons/hugeicons.dart';
+import 'package:parbank/S-CARDDETL/CARDDETL.dart';
 import 'package:parbank/S-MNYTRNSFR/MNYTRNSFR.dart';
 import 'package:parbank/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
@@ -208,95 +209,103 @@ class _HOMESCRNState extends State<HOMESCRN> {
                         return PageView.builder(
                           itemCount: cardList.length,
                           itemBuilder: (context, index) {
-                            return Container(
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 30,
-                                ),
-                                decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                        colors: UColor.CardGradients[
-                                            cardList[index].Type],
-                                        transform: const GradientRotation(45)),
-                                    borderRadius: BorderRadius.circular(12)),
-                                child: Stack(
-                                  children: [
-                                    Container(
-                                        alignment: Alignment.bottomCenter,
-                                        padding: const EdgeInsets.all(18),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            UText(
-                                              HelperMethods.cardNoWithSpaces(
-                                                  cardList[index].CardNo),
-                                              fontWeight: FontWeight.w700,
-                                              color: UColor.WhiteColor,
-                                              fontSize: 18,
-                                            ),
-                                            Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context)=> CARDDETL(cc: cardList[index])));
+                              },
+                              child: Hero(
+                                tag: "CreditCard",
+                                child: Container(
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 30,
+                                    ),
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: UColor.CardGradients[
+                                                cardList[index].Type],
+                                            transform: const GradientRotation(45)),
+                                        borderRadius: BorderRadius.circular(12)),
+                                    child: Stack(
+                                      children: [
+                                        Container(
+                                            alignment: Alignment.bottomCenter,
+                                            padding: const EdgeInsets.all(18),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 UText(
-                                                    "SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
-                                                    fontWeight: FontWeight.w600,
-                                                    color: UColor.WhiteColor),
-                                                UText(
-                                                    "CVV: ${cardList[index].CVV}",
-                                                    fontWeight: FontWeight.w600,
-                                                    color: UColor.WhiteColor),
+                                                  HelperMethods.cardNoWithSpaces(
+                                                      cardList[index].CardNo),
+                                                  fontWeight: FontWeight.w700,
+                                                  color: UColor.WhiteColor,
+                                                  fontSize: 18,
+                                                ),
+                                                Row(
+                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    UText(
+                                                        "SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
+                                                        fontWeight: FontWeight.w600,
+                                                        color: UColor.WhiteColor),
+                                                    UText(
+                                                        "CVV: ${cardList[index].CVV}",
+                                                        fontWeight: FontWeight.w600,
+                                                        color: UColor.WhiteColor),
+                                                  ],
+                                                ),
                                               ],
-                                            ),
-                                          ],
-                                        )),
-                                    Container(
-                                      alignment: Alignment.topLeft,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 24, vertical: 18),
-                                      child: UText(
-                                        cardList[index].TypeName,
-                                        fontWeight: FontWeight.w600,
-                                        color: UColor.WhiteColor,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment: Alignment.topRight,
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 24, vertical: 18),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          UText(
-                                            "${Localizer.Get(Localizer.outstanding_balance)}:",
-                                            fontWeight: FontWeight.w400,
-                                            fontSize: 13,
+                                            )),
+                                        Container(
+                                          alignment: Alignment.topLeft,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 24, vertical: 18),
+                                          child: UText(
+                                            cardList[index].TypeName,
+                                            fontWeight: FontWeight.w600,
                                             color: UColor.WhiteColor,
+                                            fontSize: 18,
                                           ),
-                                          Row(
+                                        ),
+                                        Container(
+                                          alignment: Alignment.topRight,
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 24, vertical: 18),
+                                          child: Column(
                                             mainAxisSize: MainAxisSize.min,
                                             children: [
-                                              UIcon(
-                                                Icons.currency_lira,
-                                                color: UColor.WhiteColor,
-                                                size: 16,
-                                              ),
                                               UText(
-                                                HelperMethods.FormatBalance(
-                                                    cardList[index]
-                                                        .OutstandingBalance),
-                                                fontWeight: FontWeight.w600,
+                                                "${Localizer.Get(Localizer.outstanding_balance)}:",
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 13,
                                                 color: UColor.WhiteColor,
+                                              ),
+                                              Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  UIcon(
+                                                    Icons.currency_lira,
+                                                    color: UColor.WhiteColor,
+                                                    size: 16,
+                                                  ),
+                                                  UText(
+                                                    HelperMethods.FormatBalance(
+                                                        cardList[index]
+                                                            .OutstandingBalance),
+                                                    fontWeight: FontWeight.w600,
+                                                    color: UColor.WhiteColor,
+                                                  ),
+                                                ],
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ));
+                                        )
+                                      ],
+                                    )),
+                              ),
+                            );
                           },
                         );
                       } else if (snapshot.connectionState ==

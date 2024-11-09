@@ -14,7 +14,9 @@ class IService
   static const String GET_CUSTOMER_BY_IDENTITY_NO = "Customer/GetCustomerByIdentityNo";
   static const String GET_ACCOUNTS = "Account/GetAccounts";
   static const String GET_CREDIT_CARDS = "CreditCard/GetCreditCards";
+  static const String CARD_EXPENSE_PAYMENT = "CreditCard/CardExpensePayment";
   static const String GET_TRANSACTION_HISTORY = "TransactionHistory/GetTransactionHistory";
   static const String TRIGGER_SCHEDULES = "Schedule/TriggerSchedules";
   static const String CHECK_RECIPIENT_CUSTOMER = "Transfer/CheckRecipientCustomer";
+  static const String SELECT_CC_WITH_DETAILS = "CreditCard/SelectCreditCardWithDetails";
 }
