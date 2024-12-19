@@ -1,7 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:parbank/S-LGNIDNTY/LGNIDNTY.dart';
+import 'package:parbank/UI/S-LGNIDNTY/LGNIDNTY.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/UAsset.dart';
 import 'package:parbank/helpers/UColor.dart';

@@ -1,69 +1,61 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'dart:convert';
-
 import 'package:parbank/api/ENV.dart';
+import 'package:parbank/api/URequestTypes.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:dio/dio.dart';
 
 class UProxy {
-  static Future<MessageContainer> Post(
-      String path, MessageContainer message) async {
+  static Future<MessageContainer> Request(
+      URequestTypes requestType, String path, MessageContainer message) async{
+        UProxy _proxy = UProxy();
     final dio = Dio();
     dio.options.validateStatus = (status) {
       return status != null && status < 501;
     };
-
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["authorization"] = "Bearer ${ENV.Token}";
+    late Response response;
+    if(requestType == URequestTypes.GET){
+      response = await _proxy.Get(dio, path, message);
+    }else if(requestType == URequestTypes.POST){
+      response = await _proxy.Post(dio, path, message);
+    }else if(requestType == URequestTypes.PUT){
+      response = await _proxy.Put(dio, path, message);
+    }else if(requestType == URequestTypes.DELETE){
 
-    final response =
-        await dio.post(ENV.ConnectionString + path, data: message.toJson());
+    }else{
+      throw Exception("");
+    }
 
-    if (response.statusCode! > 299) {
+    if(response.statusCode! > 299){
       throw Exception(response.data);
     }
 
-    return MessageContainer.fromJson(response.data);
+    return requestType == URequestTypes.GET ? MessageContainer.fromJson(response.data["contents"]) : MessageContainer.fromJson(response.data);
   }
 
-  static Future<MessageContainer> Put(
-      String path, MessageContainer message) async {
-    final dio = Dio();
-    dio.options.validateStatus = (status) {
-      return status != null && status < 501;
-    };
+  Future<Response> Post(
+      Dio dio, String path, MessageContainer message) async {
+    final response =
+        await dio.post(ENV.ConnectionString + path, data: message.toJson());
 
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["authorization"] = "Bearer ${ENV.Token}";
+    return response;
+  }
 
+  Future<Response> Put(
+      Dio dio, String path, MessageContainer message) async {
     final response =
         await dio.put(ENV.ConnectionString + path, data: message.toJson());
 
-    if (response.statusCode! > 299) {
-      throw Exception(response.data);
-    }
-
-    return MessageContainer.fromJson(response.data);
+    return response;
   }
 
-  static Future<MessageContainer> Get(
-      String path, MessageContainer message) async {
-    final dio = Dio();
-    dio.options.validateStatus = (status) {
-      return status != null && status < 501;
-    };
-
-    dio.options.headers['content-Type'] = 'application/json';
-    dio.options.headers["authorization"] = "Bearer ${ENV.Token}";
-
+  Future<Response> Get(
+      Dio dio, String path, MessageContainer message) async {
     final response =
         await dio.post(ENV.ConnectionString + path, data: message.toJson());
 
-    if (response.statusCode! > 299) {
-      throw Exception(response.data);
-    }
-
-    return MessageContainer.fromJson(response.data["contents"]);
+    return response;
   }
 }
