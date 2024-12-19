@@ -2,7 +2,6 @@
 
 class IService
 {
-  
   static const String GET_LOGIN_CREDENTIALS = "Login/GetLoginCredentials";
   static const String UPDATE_PASSWORD = "Login/UpdatePassword";
   static const String CREATE_CUSTOMER = "Customer/CreateCustomer";

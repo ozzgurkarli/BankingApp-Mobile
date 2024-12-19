@@ -40,6 +40,8 @@ dependencies:
   mask_text_input_formatter: ^2.9.0
   easy_mask: ^2.0.1
   shared_preferences: ^2.2.3
+  firebase_core: ^3.6.0
+  firebase_messaging: ^15.1.3
 
 
 
