@@ -44,3 +44,4 @@ app.*.map.json
 lib/helpers/ENV.dart
 lib/helpers/ENV.dart
 lib/api/ENV.dart
+ios/Runner/GoogleService-Info.plist

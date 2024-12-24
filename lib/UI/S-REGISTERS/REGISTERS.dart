@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:parbank/UI/S-LGNIDNTY/LGNIDNTY.dart';
+import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/api/URequestTypes.dart';
@@ -15,6 +16,7 @@ import 'package:parbank/components/UText.dart';
 import 'package:parbank/components/UTextButton.dart';
 import 'package:parbank/components/UTextField.dart';
 import 'package:parbank/dto/DTOCustomer.dart';
+import 'package:parbank/dto/DTOLogin.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:parbank/helpers/HelperMethods.dart';
 import 'package:parbank/helpers/Localizer.dart';
@@ -231,10 +233,13 @@ class _REGISTERSState extends State<REGISTERS> {
 
             try {
               await UProxy.Request(
-                URequestTypes.POST,
+                  URequestTypes.POST,
                   IService.CREATE_CUSTOMER,
-                  MessageContainer.builder(
-                      {"DTOCustomer": widget.dtoCustomer}));
+                  MessageContainer.builder({
+                    "DTOCustomer": widget.dtoCustomer,
+                    "DTOLogin":
+                        DTOLogin(NotificationToken: ENV.NotificationToken, IdentityNo: widget.dtoCustomer.IdentityNo)
+                  }));
 
               Navigator.pop(context);
               HelperMethods.InsertData(

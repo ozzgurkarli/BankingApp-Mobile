@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parbank/UI/S-BTMGNRTR/BTMGNRTR.dart';
+import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
 import 'package:parbank/api/URequestTypes.dart';
@@ -180,6 +181,7 @@ class _NEWPSWRDState extends State<NEWPSWRD> {
           } else {
             HelperMethods.SetLoadingScreen(context);
             widget.dtoLogin.Password = int.parse(controller.text);
+            widget.dtoLogin.NotificationToken = ENV.NotificationToken;
             late DTOCustomer customer;
             try {
               await UProxy.Request(URequestTypes.PUT, IService.UPDATE_PASSWORD,

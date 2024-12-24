@@ -15,6 +15,7 @@ class UProxy {
     };
     dio.options.headers['content-Type'] = 'application/json';
     dio.options.headers["authorization"] = "Bearer ${ENV.Token}";
+    dio.options.headers['Identity-No'] = ENV.IdentityNo;
     late Response response;
     if(requestType == URequestTypes.GET){
       response = await _proxy.Get(dio, path, message);
@@ -53,6 +54,8 @@ class UProxy {
 
   Future<Response> Get(
       Dio dio, String path, MessageContainer message) async {
+        var x = message.toJson();
+        var y = x.toString();
     final response =
         await dio.post(ENV.ConnectionString + path, data: message.toJson());
 
