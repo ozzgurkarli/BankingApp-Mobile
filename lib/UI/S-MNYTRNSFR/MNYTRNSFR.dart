@@ -362,7 +362,7 @@ class _MNYTRNSFRState extends State<MNYTRNSFR> {
             IService.CHECK_RECIPIENT_CUSTOMER,
             MessageContainer.builder({
               "DTOTransfer":
-                  DTOTransfer(RecipientAccountNo: recipientController.text),
+                  DTOTransfer(RecipientAccountNo: recipientController.text, SenderCustomerNo: widget.customer.CustomerNo),
             })).then((value) {
           return DTOCustomer.fromJson(value.GetWithKey("DTOCustomer"));
         });

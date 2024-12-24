@@ -139,6 +139,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                     }
 
                     HelperMethods.SetLoadingScreen(context);
+                    ENV.IdentityNo = widget.dtoLogin.IdentityNo;
                     MessageContainer request = MessageContainer();
                     request.Add(
                         "DTOLogin",
@@ -146,7 +147,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                             IdentityNo: widget.dtoLogin.IdentityNo,
                             Password: int.parse(controller.text)));
                     MessageContainer response;
-                    try {
+                    try { 
                       response = await UProxy.Request(
                       URequestTypes.GET,
                           IService.GET_LOGIN_CREDENTIALS, request);

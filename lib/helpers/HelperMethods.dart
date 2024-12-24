@@ -98,13 +98,21 @@ class HelperMethods {
     return num;
   }
 
-  static SetSnackBar(BuildContext context, String text) {
+  static SetSnackBar(BuildContext context, String text,
+      {bool errorBar = false,
+      Duration duration = const Duration(seconds: 5),
+      GestureTapCallback? onTap}) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       margin: EdgeInsets.all(USize.Height / 20),
-      content: Align(alignment: Alignment.center, child: UText(text)),
-      backgroundColor: UColor.PrimaryLightColor,
+      content: GestureDetector(onTap: onTap, child: Align(alignment: Alignment.center, child: UText(text, color: UColor.WhiteColor,))),
+      duration: duration,
+      backgroundColor: errorBar
+          ? UColor.RedHeavyColor
+          : UColor.PrimaryLightColor,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       showCloseIcon: true,
-      closeIconColor: UColor.PrimaryColor,
+      closeIconColor:
+          errorBar ? UColor.WhiteColor : UColor.PrimaryColor,
       behavior: SnackBarBehavior.floating,
     ));
   }
@@ -160,60 +168,63 @@ class HelperMethods {
   }
 
   static ApiException(BuildContext context, String exception, {int? popUntil}) {
-    showModalBottomSheet(
-      context: context,
-      barrierColor: UColor.BarrierColor,
-      backgroundColor: Colors.black,
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(45), topRight: Radius.circular(45))),
-      isScrollControlled: true,
-      builder: (context) {
-        return Container(
-          decoration: const BoxDecoration(
-              color: UColor.WhiteColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(45), topRight: Radius.circular(45))),
-          height: USize.Height / 2.2,
-          child: Center(
-            child: Column(
-              children: [
-                Gap(USize.Height / 55),
-                UText(
-                  Localizer.Get(Localizer.error),
-                  fontWeight: FontWeight.w500,
-                  fontSize: 26,
-                ),
-                Gap(USize.Height / 33),
-                HelperMethods.ShowAsset(
-                  UAsset.NETWORK_ERROR,
-                  height: USize.Height / 8,
-                  width: USize.Height / 8,
-                ),
-                Gap(USize.Height / 55),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: UText(Localizer.Get(Localizer.error_database) + exception),
-                  ),
-                ),
-                Gap(USize.Height / 100),
-                UButton(
-                    onPressed: () {
-                      int count = 0;
-                      popUntil = popUntil ?? 2;
-                      Navigator.of(context)
-                          .popUntil((_) => count++ >= popUntil!);
-                    },
-                    child: UText(
-                      Localizer.Get(Localizer.ok),
-                      color: UColor.WhiteColor,
-                    )),
-                Gap(USize.Height / 50),
-              ],
-            ),
-          ),
-        );
-      },
-    );
+    HelperMethods.SetSnackBar(context, exception.toString(),
+          errorBar: true);
+      Navigator.pop(context);
+    // showModalBottomSheet(
+    //   context: context,
+    //   barrierColor: UColor.BarrierColor,
+    //   backgroundColor: Colors.black,
+    //   shape: const RoundedRectangleBorder(
+    //       borderRadius: BorderRadius.only(
+    //           topLeft: Radius.circular(45), topRight: Radius.circular(45))),
+    //   isScrollControlled: true,
+    //   builder: (context) {
+    //     return Container(
+    //       decoration: const BoxDecoration(
+    //           color: UColor.WhiteColor,
+    //           borderRadius: BorderRadius.only(
+    //               topLeft: Radius.circular(45), topRight: Radius.circular(45))),
+    //       height: USize.Height / 2.2,
+    //       child: Center(
+    //         child: Column(
+    //           children: [
+    //             Gap(USize.Height / 55),
+    //             UText(
+    //               Localizer.Get(Localizer.error),
+    //               fontWeight: FontWeight.w500,
+    //               fontSize: 26,
+    //             ),
+    //             Gap(USize.Height / 33),
+    //             HelperMethods.ShowAsset(
+    //               UAsset.NETWORK_ERROR,
+    //               height: USize.Height / 8,
+    //               width: USize.Height / 8,
+    //             ),
+    //             Gap(USize.Height / 55),
+    //             Expanded(
+    //               child: SingleChildScrollView(
+    //                 child: UText(Localizer.Get(Localizer.error_database) + exception),
+    //               ),
+    //             ),
+    //             Gap(USize.Height / 100),
+    //             UButton(
+    //                 onPressed: () {
+    //                   int count = 0;
+    //                   popUntil = popUntil ?? 2;
+    //                   Navigator.of(context)
+    //                       .popUntil((_) => count++ >= popUntil!);
+    //                 },
+    //                 child: UText(
+    //                   Localizer.Get(Localizer.ok),
+    //                   color: UColor.WhiteColor,
+    //                 )),
+    //             Gap(USize.Height / 50),
+    //           ],
+    //         ),
+    //       ),
+    //     );
+    //   },
+    // );
   }
 }
