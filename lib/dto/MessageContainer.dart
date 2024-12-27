@@ -43,7 +43,10 @@ class MessageContainer {
     for (var item in contents.entries) {
       if(item.value is List){
         for (var i = 0; i < item.value.length; i++) {
-          item.value[i] = item.value[i].toJson();
+          try{
+            item.value[i] = item.value[i].toJson();
+          }
+          catch(e){}
         }
         temp[item.key] = item.value;
       }

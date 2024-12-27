@@ -9,6 +9,7 @@ import 'package:parbank/UI/S-LGNIDNTY/LGNIDNTY.dart';
 import 'package:parbank/UI/S-MNYTRNSFR/MNYTRNSFR.dart';
 import 'package:parbank/UI/S-MRKTINFO/MRKTINFO.dart';
 import 'package:parbank/UI/S-OPENACCT/OPENACCT.dart';
+import 'package:parbank/UI/S-SETTINGS/SETTINGS.dart';
 import 'package:parbank/UI/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
@@ -63,7 +64,8 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
 
                 try {
                   parList = await UProxy.Request(
-                      URequestTypes.GET,IService.GET_MULTIPLE_GROUP_CODE,
+                          URequestTypes.GET,
+                          IService.GET_MULTIPLE_GROUP_CODE,
                           MessageContainer.builder({"ParameterList": parList}))
                       .then((value) {
                     return value.GetWithKey("ParameterList");
@@ -262,7 +264,13 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
               }
             ],
             [Localizer.Get(Localizer.credit_calculation), () {}],
-            [Localizer.Get(Localizer.settings), () {}],
+            [
+              Localizer.Get(Localizer.settings),
+              () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SETTINGS()));
+              }
+            ],
             [
               Localizer.Get(Localizer.log_out),
               () {

@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:parbank/UI/S-CARDDETL/CARDDETL.dart';
 import 'package:parbank/UI/S-MNYTRNSFR/MNYTRNSFR.dart';
+import 'package:parbank/UI/S-SETTINGS/SETTINGS.dart';
 import 'package:parbank/UI/S-TRACTHST/TRACTHST.dart';
 import 'package:parbank/api/IService.dart';
 import 'package:parbank/api/UProxy.dart';
@@ -51,6 +52,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
               color: UColor.WhiteColor,
             ),
             iconSize: 27,
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SETTINGS()));
+            },
           ),
         )
       ],
@@ -66,7 +71,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
                   height: USize.Height / 4.7,
                   child: FutureBuilder(
                     future: UProxy.Request(
-                      URequestTypes.GET,
+                        URequestTypes.GET,
                         IService.GET_ACCOUNTS,
                         MessageContainer.builder({
                           "DTOAccount": DTOAccount(
@@ -176,9 +181,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
                   height: USize.Height / 4.7,
                   child: FutureBuilder(
                     future: UProxy.Request(
-                      URequestTypes.GET,
+                        URequestTypes.GET,
                         IService.GET_CREDIT_CARDS,
-                        MessageContainer.builder({  //
+                        MessageContainer.builder({
+                          //
                           "DTOCreditCard": DTOCreditCard(
                               CustomerNo: widget.customer.CustomerNo,
                               Active: true),
@@ -214,7 +220,11 @@ class _HOMESCRNState extends State<HOMESCRN> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=> CARDDETL(cc: cardList[index])));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            CARDDETL(cc: cardList[index])));
                               },
                               child: Hero(
                                 tag: "CreditCard",
@@ -226,8 +236,10 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                         gradient: LinearGradient(
                                             colors: UColor.CardGradients[
                                                 cardList[index].Type],
-                                            transform: const GradientRotation(45)),
-                                        borderRadius: BorderRadius.circular(12)),
+                                            transform:
+                                                const GradientRotation(45)),
+                                        borderRadius:
+                                            BorderRadius.circular(12)),
                                     child: Stack(
                                       children: [
                                         Container(
@@ -237,26 +249,33 @@ class _HOMESCRNState extends State<HOMESCRN> {
                                               mainAxisSize: MainAxisSize.min,
                                               children: [
                                                 UText(
-                                                  HelperMethods.cardNoWithSpaces(
-                                                      cardList[index].CardNo),
+                                                  HelperMethods
+                                                      .cardNoWithSpaces(
+                                                          cardList[index]
+                                                              .CardNo),
                                                   fontWeight: FontWeight.w700,
                                                   color: UColor.WhiteColor,
                                                   fontSize: 18,
                                                 ),
                                                 Row(
-                                                  mainAxisSize: MainAxisSize.max,
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
                                                   mainAxisAlignment:
                                                       MainAxisAlignment
                                                           .spaceBetween,
                                                   children: [
                                                     UText(
                                                         "SKT: ${HelperMethods.toExpirationDate(cardList[index].ExpirationDate)}",
-                                                        fontWeight: FontWeight.w600,
-                                                        color: UColor.WhiteColor),
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            UColor.WhiteColor),
                                                     UText(
                                                         "CVV: ${cardList[index].CVV}",
-                                                        fontWeight: FontWeight.w600,
-                                                        color: UColor.WhiteColor),
+                                                        fontWeight:
+                                                            FontWeight.w600,
+                                                        color:
+                                                            UColor.WhiteColor),
                                                   ],
                                                 ),
                                               ],
@@ -367,7 +386,7 @@ class _HOMESCRNState extends State<HOMESCRN> {
 
                     try {
                       transactionList = await UProxy.Request(
-                      URequestTypes.GET,
+                          URequestTypes.GET,
                           IService.GET_TRANSACTION_HISTORY,
                           MessageContainer.builder({
                             "DTOTransactionHistory": DTOTransactionHistory(
@@ -383,14 +402,17 @@ class _HOMESCRNState extends State<HOMESCRN> {
                       return;
                     }
                     for (var i = 0; i < transactionList.length; i++) {
-                      transactionList[i] = DTOTransactionHistory.fromJson(transactionList[i]);
+                      transactionList[i] =
+                          DTOTransactionHistory.fromJson(transactionList[i]);
                     }
                     Navigator.pop(context);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                TRACTHST(Transactions: transactionList, customer: widget.customer,)));
+                            builder: (context) => TRACTHST(
+                                  Transactions: transactionList,
+                                  customer: widget.customer,
+                                )));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
