@@ -143,7 +143,7 @@ class _CARDDETLState extends State<CARDDETL> {
                   URequestTypes.GET,
                   IService.SELECT_CC_WITH_DETAILS,
                   MessageContainer.builder({
-                    "DTOCreditCard": DTOCreditCard(CardNo: widget.cc.CardNo),
+                    "DTOCreditCard": widget.cc,
                   })),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
