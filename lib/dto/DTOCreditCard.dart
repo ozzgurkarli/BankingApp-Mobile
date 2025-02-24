@@ -38,7 +38,7 @@ class DTOCreditCard
       CVV: json['cvv'] as int?,
       BillingDay: json['billingDay'] as int?,
       Active: json['active'] as bool?,
-      ExpirationDate: DateTime.parse(json['expirationDate']) as DateTime?,
+      ExpirationDate: DateTime.parse(json['expirationDate'] ?? DateTime(1).toIso8601String()) as DateTime?,
       AccountClosingDate: DateTime.parse(json['accountClosingDate'] ?? DateTime(1).toIso8601String()) as DateTime?,
       NextAccountClosingDate: DateTime.parse(json['nextAccountClosingDate'] ?? DateTime(1).toIso8601String()) as DateTime?,
       TypeFee: double.parse(json['typeFee'].toString() != "null" ? json['typeFee'].toString() : "0") as double?,
@@ -48,7 +48,6 @@ class DTOCreditCard
     );
   }
 
-  // toJson metodu
   Map<String, dynamic> toJson() {
     return {
       'Id': Id,
@@ -58,15 +57,15 @@ class DTOCreditCard
       'Type': Type,
       'CVV': CVV,
       'BillingDay': BillingDay,
-      'ExpirationDate': ExpirationDate,
+      'ExpirationDate': (ExpirationDate ?? DateTime(1)).toIso8601String(),
       'Limit': Limit,
       'Active': Active,
       'CurrentDebt': CurrentDebt,
       'InstallmentCount': InstallmentCount,
       'Amount': Amount,
       'TypeFee': TypeFee,
-      'NextAccountClosingDate': NextAccountClosingDate,
-      'AccountClosingDate': AccountClosingDate,
+      'NextAccountClosingDate': (NextAccountClosingDate ?? DateTime(1)).toIso8601String(),
+      'AccountClosingDate': (AccountClosingDate ?? DateTime(1)).toIso8601String(),
       'TransactionCompany': TransactionCompany,
       'TotalDebt': TotalDebt
     };
