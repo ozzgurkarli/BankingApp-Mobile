@@ -397,7 +397,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                       URequestTypes.GET,
                             IService.GET_PARAMETERS_BY_GROUP_CODE,
                             MessageContainer.builder({
-                              "Parameter": DTOParameter(GroupCode: "Currency")
+                              "DTOParameter": DTOParameter(GroupCode: "Currency")
                             })).then((value) {
                           return value.GetWithKey("ParameterList");
                         });

@@ -107,7 +107,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                       URequestTypes.GET,
                       IService.GET_PARAMETERS_BY_GROUP_CODE,
                       MessageContainer.builder({
-                        "Parameter": DTOParameter(GroupCode: "CardType")
+                        "DTOParameter": DTOParameter(GroupCode: "CardType")
                       })).then((value) {
                     return value.GetWithKey("ParameterList");
                   });
@@ -214,7 +214,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                       URequestTypes.GET,
                       IService.GET_PARAMETERS_BY_GROUP_CODE,
                       MessageContainer.builder({
-                        "Parameter": DTOParameter(GroupCode: "Currency")
+                        "DTOParameter": DTOParameter(GroupCode: "Currency")
                       })).then((value) {
                     return value.GetWithKey("ParameterList");
                   });
