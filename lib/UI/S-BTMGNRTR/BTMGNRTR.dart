@@ -66,7 +66,7 @@ class _BTMGNRTRState extends State<BTMGNRTR> {
                   parList = await UProxy.Request(
                           URequestTypes.GET,
                           IService.GET_MULTIPLE_GROUP_CODE,
-                          MessageContainer.builder({"ParameterList": parList}))
+                          MessageContainer.builder({"List<DTOParameter>": parList}))
                       .then((value) {
                     return value.GetWithKey("ParameterList");
                   });

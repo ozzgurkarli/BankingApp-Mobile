@@ -2,11 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:parbank/components/UButton.dart';
 import 'package:parbank/components/UCircularProgressIndicator.dart';
 import 'package:parbank/components/UText.dart';
-import 'package:parbank/helpers/Localizer.dart';
-import 'package:parbank/helpers/UAsset.dart';
 import 'package:parbank/helpers/UColor.dart';
 import 'package:intl/intl.dart';
 import 'package:parbank/helpers/USize.dart';

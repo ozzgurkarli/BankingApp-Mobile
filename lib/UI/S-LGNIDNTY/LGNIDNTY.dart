@@ -474,7 +474,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
     try {
       parList = await UProxy.Request(
                       URequestTypes.GET,IService.GET_MULTIPLE_GROUP_CODE,
-          MessageContainer.builder({"ParameterList": parList})).then((value) {
+          MessageContainer.builder({"List<DTOParameter>": parList})).then((value) {
         return value.GetWithKey("ParameterList");
       });
     } catch (e) {

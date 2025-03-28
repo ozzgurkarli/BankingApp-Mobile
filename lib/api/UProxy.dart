@@ -54,8 +54,6 @@ class UProxy {
 
   Future<Response> Get(
       Dio dio, String path, MessageContainer message) async {
-        var x = message.toJson();
-        var y = x.toString();
     final response =
         await dio.post(ENV.ConnectionString + path, data: message.toJson());
 
