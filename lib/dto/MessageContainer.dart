@@ -1,6 +1,8 @@
+import 'package:parbank/dto/CallerInformation.dart';
 import 'package:parbank/dto/DTOLogin.dart';
 
 class MessageContainer {
+  CallerInformation callerInformation = CallerInformation();
   Map<String, dynamic> contents = {};
 
   MessageContainer();

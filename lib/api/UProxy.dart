@@ -2,6 +2,7 @@
 
 import 'package:parbank/api/ENV.dart';
 import 'package:parbank/api/URequestTypes.dart';
+import 'package:parbank/dto/CallerInformation.dart';
 import 'package:parbank/dto/MessageContainer.dart';
 import 'package:dio/dio.dart';
 
@@ -17,6 +18,9 @@ class UProxy {
     dio.options.headers["authorization"] = "Bearer ${ENV.Token}";
     dio.options.headers['Identity-No'] = ENV.IdentityNo;
     late Response response;
+    message.callerInformation = CallerInformation(ServiceName: path.split('.').first, OperationName: path.split('.').last);
+    path = "InvokeOperation";
+    message.Add("BankingApp.Infrastructure.Common.DataTransferObjects.CallerInformation", message.callerInformation);
     if(requestType == URequestTypes.GET){
       response = await _proxy.Get(dio, path, message);
     }else if(requestType == URequestTypes.POST){
