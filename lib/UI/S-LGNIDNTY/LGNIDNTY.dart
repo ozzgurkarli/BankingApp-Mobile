@@ -236,7 +236,7 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                       HelperMethods.SetLoadingScreen(context);
                       MessageContainer request = MessageContainer();
                       request.Add(
-                          "DTOLogin", DTOLogin(IdentityNo: controller.text));
+                          "BankingApp.Customer.Common.DataTransferObjects.DTOLogin", DTOLogin(IdentityNo: controller.text));
                       MessageContainer response;
                       try {
                         response = await UProxy.Request(
@@ -247,10 +247,10 @@ class _LGNIDNTYState extends State<LGNIDNTY> {
                         return;
                       }
                       if (response.GetWithKey(
-                              "BankingApp.Common.DataTransferObjects.DTOLogin") !=
+                              "BankingApp.Customer.Common.DataTransferObjects.DTOLogin") !=
                           null) {
                         DTOLogin dtoLogin = response.GetWithKey(
-                            "BankingApp.Common.DataTransferObjects.DTOLogin");
+                            "BankingApp.Customer.Common.DataTransferObjects.DTOLogin");
                         ENV.Token = dtoLogin.Token;
                         Navigator.push(
                             context,

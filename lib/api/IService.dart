@@ -2,7 +2,7 @@
 
 class IService
 {
-  static const String GET_LOGIN_CREDENTIALS = "Login/GetLoginCredentials";
+  static const String GET_LOGIN_CREDENTIALS = "ISCustomer.GetLoginCredentials";
   static const String UPDATE_PASSWORD = "Login/UpdatePassword";
   static const String CREATE_CUSTOMER = "Customer/CreateCustomer";
   static const String ADD_ACCOUNT = "Account/AddAccount";

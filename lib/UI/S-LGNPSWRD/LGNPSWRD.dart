@@ -142,7 +142,7 @@ class _LGNPSWRDState extends State<LGNPSWRD> {
                     ENV.IdentityNo = widget.dtoLogin.IdentityNo;
                     MessageContainer request = MessageContainer();
                     request.Add(
-                        "DTOLogin",
+                        "BankingApp.Customer.Common.DataTransferObjects.DTOLogin",
                         DTOLogin(
                             IdentityNo: widget.dtoLogin.IdentityNo,
                             Password: int.parse(controller.text)));
